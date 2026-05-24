@@ -1,0 +1,84 @@
+{
+  "skill_name": "table_cell_intersection_locator",
+  "skill_type": "visual",
+  "visual_skill_kind": "static",
+  "prior_kind": "static",
+  "bottleneck": "protocol_ambiguity",
+  "visual_prior_specs": [
+    {
+      "name": "row_col_intersection_overlay",
+      "prior_kind": "static",
+      "strategy": "overlay",
+      "content_description": "An overlay on the provided 4x4 table image demonstrating the intersection of row C and column Q3.",
+      "source_frame_index": 0,
+      "crop_region_description": "",
+      "search_query": "",
+      "draw_instructions": "Draw a semi-transparent horizontal highlight band across the entire row labeled 'C'. Draw a semi-transparent vertical highlight band down the entire column labeled 'Q3'. Draw a distinct solid dot exactly at the center of the cell where the two highlight bands intersect.",
+      "visual_rationale": "Demonstrates the spatial concept of row and column bands intersecting to isolate a single target cell, clarifying the exact visual boundaries and center point without relying on prose.",
+      "visual_encodings": [
+        "Horizontal semi-transparent band = target row extent",
+        "Vertical semi-transparent band = target column extent",
+        "Solid dot = center of the intersecting target cell"
+      ],
+      "text_exclusions": [
+        "Do not write 'Row C' or 'Column Q3' on the overlay itself; let the original image labels show through.",
+        "Do not add explanatory text about how intersection works."
+      ],
+      "forbidden_elements": [
+        "Text boxes",
+        "Arrows pointing to labels",
+        "Long captions",
+        "Legends"
+      ],
+      "max_text_tokens": 0,
+      "image_generation_prompt": "",
+      "image_generation_model": "",
+      "image_generation_size": "1024x1024",
+      "renderer_name": "",
+      "renderer_description": "",
+      "renderer_inputs": [],
+      "renderer_outputs": []
+    }
+  ],
+  "binding_protocol": {
+    "image_roles": [
+      "reference_overlay"
+    ],
+    "coordinate_system": "relative to table boundaries",
+    "text_to_visual_binding": [
+      "The horizontal band corresponds to the row specified in the task.",
+      "The vertical band corresponds to the column specified in the task.",
+      "The intersection dot represents the final output location of the target cell."
+    ],
+    "task_binding_rules": [
+      "Identify the row label matching the target row.",
+      "Identify the column label matching the target column.",
+      "Trace the row horizontally and the column vertically to their intersection."
+    ],
+    "anti_leakage_rules": [
+      "Do not hardcode 'C' or 'Q3' in the execution steps; use generic 'target_row' and 'target_column' parameters."
+    ]
+  },
+  "runtime_protocol": {
+    "mode": "single_turn",
+    "state_schema": "",
+    "update_rule": "",
+    "stop_condition": "",
+    "renderer_spec": ""
+  },
+  "usage_constraints": [
+    "The table must have clear row and column labels.",
+    "The table must be a regular grid without complex merged cells spanning the target intersection."
+  ],
+  "assets": [
+    {
+      "filename": "row_col_intersection_overlay.png",
+      "prior_name": "row_col_intersection_overlay",
+      "prior_kind": "static",
+      "strategy": "overlay",
+      "description": "An overlay on the provided 4x4 table image demonstrating the intersection of row C and column Q3.",
+      "width": 900,
+      "height": 620
+    }
+  ]
+}

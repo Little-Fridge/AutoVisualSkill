@@ -1,0 +1,101 @@
+{
+  "skill_name": "incremental_line_trace_overlay",
+  "skill_type": "visual",
+  "visual_skill_kind": "dynamic",
+  "prior_kind": "dynamic",
+  "bottleneck": "perceptual_tracking",
+  "visual_prior_specs": [
+    {
+      "name": "line_trace_overlay_renderer",
+      "prior_kind": "dynamic",
+      "strategy": "renderer",
+      "content_description": "A dynamic overlay protocol that draws the accepted trace, current endpoint, and branch candidates directly onto the task image after each local path-following decision.",
+      "source_frame_index": -1,
+      "crop_region_description": "",
+      "search_query": "",
+      "draw_instructions": "",
+      "visual_rationale": "The rendered overlay externalizes continuous trajectory state directly in image space, which prose alone cannot reliably maintain while following winding paths, wires, or maze-like strokes. It reduces loops, repeated segments, and branch confusion by making the current frontier visible on the next inspection pass.",
+      "visual_encodings": [
+        "Thin highlighted path = accepted traced trajectory",
+        "Compact endpoint marker = active frontier for the next local decision",
+        "Candidate marker = unresolved branch continuation",
+        "Rejected marker = inspected continuation that is not part of the active trace",
+        "Optional target marker = destination endpoint supplied by the task"
+      ],
+      "text_exclusions": [
+        "Path-following policy and branch resolution rules must remain in Markdown text.",
+        "Task-specific route answers must not be burned into the rendered image.",
+        "Stop conditions and coordinate bookkeeping must remain in text/state, not in image labels."
+      ],
+      "forbidden_elements": [
+        "A fixed schematic path used as a reusable template",
+        "Long prose instructions inside the rendered image",
+        "pre-rendered answer coordinates or route identities",
+        "large opaque masks that hide nearby path evidence",
+        "dataset-specific maze, wire, or graph exemplars"
+      ],
+      "max_text_tokens": 12,
+      "image_generation_prompt": "",
+      "image_generation_model": "",
+      "image_generation_size": "1024x1024",
+      "renderer_name": "iterative_line_trace_overlay",
+      "renderer_description": "Render the accepted path state onto the original task image by drawing a thin trace over accepted segments, a compact marker at the current endpoint, and optional compact markers for pending or rejected branch candidates, so the next step can inspect visible runtime state.",
+      "renderer_inputs": [
+        "base task image",
+        "accepted segment list or trace point polyline",
+        "current endpoint coordinate",
+        "optional branch candidate list",
+        "optional rejected branch list",
+        "optional target endpoint",
+        "line and marker style configuration",
+        "coordinate mode"
+      ],
+      "renderer_outputs": [
+        "overlay image with rendered traced path state",
+        "optional path-state render manifest"
+      ]
+    }
+  ],
+  "binding_protocol": {
+    "image_roles": [
+      "task image: source image containing the visible path, line, wire, contour, or maze-like stroke",
+      "dynamic overlay image: same task image with accepted trajectory, current endpoint, and branch decisions rendered back onto it for subsequent tracing rounds"
+    ],
+    "coordinate_system": "Image pixel coordinates with origin at top-left; trace points and branch points may be stored as normalized or pixel (x, y) positions, but final output must specify which representation is used consistently.",
+    "text_to_visual_binding": [
+      "Rendered thin path mark = accepted traced segment.",
+      "Current endpoint marker = active frontier for the next local visual decision.",
+      "Pending branch marker = unresolved connected continuation.",
+      "Rejected branch marker = continuation inspected and ruled out.",
+      "Optional target marker = endpoint or destination supplied by the task."
+    ],
+    "task_binding_rules": [
+      "Treat the current endpoint as the only frontier for the next local tracing decision.",
+      "Only accept a next segment when it is visibly connected to the current endpoint and consistent with the task's path-following policy.",
+      "Record plausible alternate continuations as branch candidates before accepting or rejecting them.",
+      "Use the overlay from the previous round as the search image for the next round so already-traced segments are visible and not repeated.",
+      "If the image is cropped or tiled during execution, reconcile all trace points back into one global coordinate frame."
+    ],
+    "anti_leakage_rules": [
+      "Do not encode benchmark-specific path layouts, expected routes, or fixed coordinates into the prior.",
+      "Do not pre-render a reusable route image; the renderer must visualize only runtime state from the current task.",
+      "Keep all procedural explanations in text; the rendered overlay should contain only minimal path-state annotations needed for tracking."
+    ]
+  },
+  "runtime_protocol": {
+    "mode": "iterative_loop",
+    "state_schema": "{\"round_index\": <int>, \"trace_points\": [{\"x\": <number>, \"y\": <number>, \"coord_type\": \"pixel|normalized\"}], \"current_endpoint\": {\"x\": <number>, \"y\": <number>, \"coord_type\": \"pixel|normalized\"}, \"accepted_segments\": [{\"from\": [<number>, <number>], \"to\": [<number>, <number>], \"coord_type\": \"pixel|normalized\", \"round_added\": <int>}], \"branch_candidates\": [{\"id\": <string>, \"x\": <number>, \"y\": <number>, \"coord_type\": \"pixel|normalized\", \"status\": \"pending|accepted|rejected\"}], \"stop_reason\": <string>}",
+    "update_rule": "At round r, inspect the overlay image created from all accepted segments, current endpoint, and branch decisions through round r-1; identify connected untraced continuations from the current endpoint; accept the locally valid next segment or record branch candidates; append the accepted segment and new endpoint; re-render the overlay for the next round.",
+    "stop_condition": "Stop when the target endpoint is reached, no connected untraced continuation remains, all branch candidates are rejected, or max_rounds is reached.",
+    "renderer_spec": "Renderer takes the original task image plus current trace state and produces an overlay image by drawing a thin accepted path, one compact current-endpoint marker, optional pending/rejected branch markers, and optional target marker. Inputs: base image, trace points or accepted segments, current endpoint, branch candidates, rejected branches, target endpoint, visual style config. Outputs: overlay image and optionally a machine-readable path-state manifest. Update rule: after each local tracing step, append the accepted segment and endpoint, update branch statuses, then re-render all visible state onto the base image. Stop condition: target reached, no connected untraced segment, all branches rejected, or round limit reached."
+  },
+  "usage_constraints": [
+    "Use this skill only when the task requires following visible connected strokes, paths, wires, contours, or maze routes.",
+    "Do not infer invisible paths behind occluders unless the task explicitly allows that.",
+    "Do not jump across disconnected marks unless the task defines the gap as bridgeable.",
+    "Overlay marks should remain thin and compact so the original stroke evidence remains visible.",
+    "The skill blueprint defines the runtime tracing protocol, not a fixed path template.",
+    "If the task uses cropped regions, reconcile trace coordinates back into the original image frame."
+  ],
+  "assets": []
+}

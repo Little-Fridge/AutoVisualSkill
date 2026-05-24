@@ -1,0 +1,119 @@
+{
+  "preserved_content": [
+    "January 2024: Albedo",
+    "Sunlight absorption and climate change.",
+    "The ability for a surface to reflect light is called its Albedo.",
+    "Snow: A=0.7; Asphalt = 0.1",
+    "This means that a surface absorbs (1-A) of the energy falling on it.",
+    "Snow: (1-0.7) = 0.3 Asphalt = 0.9",
+    "340 watts/m^2",
+    "Atmosphere",
+    "Reflected",
+    "Ground",
+    "Absorbed",
+    "Causes Heating",
+    "Heliophysics Education Activation Team",
+    "NASA HEAT"
+  ],
+  "critique_regions": [
+    {
+      "id": "C1",
+      "bbox": [
+        0.0,
+        0.0,
+        0.63,
+        0.14
+      ],
+      "issue_type": "generic_decoration",
+      "severity": "medium",
+      "label": "Heavy colored header",
+      "redraw_instruction": "Remove the heavy red pill-shaped background. Convert 'January 2024: Albedo' to a quiet metadata eyebrow in gray ink, and promote the subtitle to the main slide title in dark ink."
+    },
+    {
+      "id": "C2",
+      "bbox": [
+        0.05,
+        0.18,
+        0.45,
+        0.65
+      ],
+      "issue_type": "reading_order",
+      "severity": "high",
+      "label": "Unstructured text block",
+      "redraw_instruction": "Convert the loose sentences into a structured hierarchy. Use a core claim for the definition, and extract the Snow/Asphalt math into clean comparison cards using the accent color for data."
+    },
+    {
+      "id": "C3",
+      "bbox": [
+        0.65,
+        0.02,
+        0.3,
+        0.25
+      ],
+      "issue_type": "diagram_clarity",
+      "severity": "medium",
+      "label": "Clunky default arrows",
+      "redraw_instruction": "Replace default Office arrows (which have dark outlines and drop shadows) with clean, flat, single-color accent lines. Align '340 watts/m^2' neatly above them."
+    },
+    {
+      "id": "C4",
+      "bbox": [
+        0.48,
+        0.35,
+        0.5,
+        0.5
+      ],
+      "issue_type": "clutter",
+      "severity": "high",
+      "label": "Messy diagram layout",
+      "redraw_instruction": "Redraw the diagram using strict horizontal and vertical alignment. Use a subtle gray rule for the Atmosphere and Ground lines. Remove the red text 'Causes Heating' and integrate it into a clean label."
+    },
+    {
+      "id": "C5",
+      "bbox": [
+        0.0,
+        0.9,
+        1.0,
+        0.1
+      ],
+      "issue_type": "brand_noise",
+      "severity": "low",
+      "label": "Distracting footer elements",
+      "redraw_instruction": "Remove the orange pill shape and decorative blue dots. Set the NASA HEAT and Heliophysics text as quiet, small gray metadata at the very bottom margin."
+    }
+  ],
+  "redraw_spec": {
+    "eyebrow": "January 2024: Albedo",
+    "slide_title": "Sunlight absorption and climate change.",
+    "core_claim": "The ability for a surface to reflect light is called its Albedo.",
+    "left_explanation": [
+      "Albedo (A) measures surface reflectivity.",
+      "Surfaces absorb the remaining energy (1-A).",
+      "Absorbed energy causes ground heating."
+    ],
+    "comparison_cards": [
+      {
+        "label": "Snow",
+        "albedo": "0.7",
+        "absorbed": "30%"
+      },
+      {
+        "label": "Asphalt",
+        "albedo": "0.1",
+        "absorbed": "90%"
+      }
+    ],
+    "diagram": {
+      "incoming": "340 watts/m^2",
+      "reflected": "Reflected sunlight",
+      "absorbed": "Absorbed energy heats ground"
+    },
+    "footer_note": "Heliophysics Education Activation Team | NASA HEAT"
+  },
+  "skill_effect_summary": [
+    "Eliminated default PowerPoint shapes (pill headers, drop-shadow arrows) in favor of a clean, flat editorial layout.",
+    "Enforced a strict palette (neutral paper, dark ink, single blue accent, gray rules) by removing arbitrary red and orange elements.",
+    "Transformed unstructured, textbook-style reading paragraphs into scannable comparison cards and concise bullets.",
+    "Improved diagram clarity by aligning elements to a grid and using subtle gray rules for environmental boundaries (Atmosphere/Ground)."
+  ]
+}

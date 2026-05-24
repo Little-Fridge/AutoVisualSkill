@@ -1,0 +1,119 @@
+{
+  "skill_name": "geometry_auxiliary_line_overlay",
+  "skill_type": "visual",
+  "visual_skill_kind": "dynamic",
+  "prior_kind": "dynamic",
+  "bottleneck": "perceptual_tracking",
+  "visual_prior_specs": [
+    {
+      "name": "geometry_auxiliary_overlay_renderer",
+      "prior_kind": "dynamic",
+      "strategy": "renderer",
+      "content_description": "A runtime overlay protocol for geometry diagrams that draws accepted auxiliary constructions, equality marks, angle correspondences, and current reasoning focus directly onto the task image.",
+      "source_frame_index": -1,
+      "crop_region_description": "",
+      "search_query": "",
+      "draw_instructions": "",
+      "visual_rationale": "Geometry reasoning often depends on intermediate visual constructions that are hard to preserve in hidden text memory. Rendering the auxiliary line and relation marks back onto the diagram makes the next local reasoning step auditable.",
+      "visual_encodings": [
+        "Green line = accepted auxiliary construction.",
+        "Blue ticks or bands = equal or corresponding lengths.",
+        "Amber arcs = angle targets or angle correspondences.",
+        "Compact focus rings = points or regions for the next reasoning step."
+      ],
+      "text_exclusions": [
+        "Proof strategy and theorem names stay in Markdown text.",
+        "Final answer and algebraic derivation stay in text, not in the overlay."
+      ],
+      "forbidden_elements": [
+        "Unsupported construction lines",
+        "Fixed answer coordinates",
+        "Opaque marks that hide the original diagram",
+        "Long prose inside the rendered image"
+      ],
+      "max_text_tokens": 8,
+      "image_generation_prompt": "",
+      "image_generation_model": "",
+      "image_generation_size": "1024x1024",
+      "renderer_name": "geometry_auxiliary_overlay",
+      "renderer_description": "Render auxiliary construction state, relation marks, and current focus onto the original geometry diagram after each local reasoning decision.",
+      "renderer_inputs": [
+        "base task image",
+        "accepted construction list",
+        "marked relation list",
+        "current focus points or regions",
+        "visual style configuration"
+      ],
+      "renderer_outputs": [
+        "overlay image with visible construction state",
+        "optional machine-readable construction-state manifest"
+      ]
+    }
+  ],
+  "binding_protocol": {
+    "image_roles": [
+      "Task input geometry diagram.",
+      "Dynamic overlay image with auxiliary lines and relation marks rendered onto the same diagram."
+    ],
+    "coordinate_system": "Use image coordinates with origin at the top-left; point labels may be symbolic when the diagram supplies them.",
+    "text_to_visual_binding": [
+      "Green construction line binds to an accepted auxiliary line.",
+      "Blue segment marks bind to equal or corresponding lengths.",
+      "Amber angle rings bind to angle targets or correspondences.",
+      "Focus rings bind to the local region the next step must inspect."
+    ],
+    "task_binding_rules": [
+      "Introduce at most one auxiliary construction per round.",
+      "Render only constructions justified by visible geometry or the problem statement.",
+      "Use the latest overlay as visual working memory for subsequent reasoning.",
+      "Keep theorem names and proof logic in text while keeping construction state in the overlay."
+    ],
+    "anti_leakage_rules": [
+      "Do not copy the synthetic triangle layout or coordinates from the preview assets.",
+      "Do not pre-render a final proof or answer before runtime reasoning supports it.",
+      "Do not hide original diagram evidence with large overlay elements."
+    ]
+  },
+  "runtime_protocol": {
+    "mode": "iterative_loop",
+    "state_schema": "{\"round_index\": <int>, \"accepted_constructions\": [{\"id\": <string>, \"type\": \"altitude|median|parallel|perpendicular|extension|connector\", \"points\": [<string>], \"status\": \"proposed|accepted|rejected\"}], \"marked_relations\": [{\"type\": \"equal_length|equal_angle|right_angle|parallel\", \"items\": [<string>], \"evidence\": <string>}], \"current_focus\": [<string>], \"stop_reason\": <string>}",
+    "update_rule": "At each round, inspect the latest overlay, propose one justified construction or relation mark, update construction state, and re-render the overlay onto the original diagram.",
+    "stop_condition": "Stop when the requested relation is visually supported, when no justified construction remains, or when max_rounds is reached.",
+    "renderer_spec": "Renderer draws thin construction lines, compact relation marks, and local focus rings onto the original diagram. It must preserve original strokes and avoid encoding unsupported conclusions."
+  },
+  "usage_constraints": [
+    "The preview assets are synthetic examples of overlay semantics, not task instances.",
+    "At runtime, render marks onto the current geometry diagram after each construction decision.",
+    "Do not draw unsupported auxiliary lines or copy preview coordinates.",
+    "Keep reasoning and theorem selection in text; keep visual working state in the overlay."
+  ],
+  "assets": [
+    {
+      "filename": "geometry_problem.png",
+      "prior_name": "synthetic_geometry_problem",
+      "prior_kind": "static",
+      "strategy": "draw",
+      "description": "Synthetic geometry input diagram used to demonstrate the runtime construction overlay.",
+      "width": 1200,
+      "height": 760
+    },
+    {
+      "filename": "geometry_auxiliary_overlay.png",
+      "prior_name": "geometry_auxiliary_overlay_preview",
+      "prior_kind": "static",
+      "strategy": "draw",
+      "description": "Static preview of auxiliary-line and relation-mark overlay semantics for a dynamic geometry skill.",
+      "width": 1200,
+      "height": 760
+    },
+    {
+      "filename": "geometry_auxiliary_runtime_trace.png",
+      "prior_name": "geometry_auxiliary_runtime_trace_preview",
+      "prior_kind": "static",
+      "strategy": "draw",
+      "description": "Side-by-side preview showing original geometry input and final runtime overlay state.",
+      "width": 1120,
+      "height": 440
+    }
+  ]
+}

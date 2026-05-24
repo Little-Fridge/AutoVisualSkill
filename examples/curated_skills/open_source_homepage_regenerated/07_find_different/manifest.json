@@ -1,0 +1,101 @@
+{
+  "skill_name": "incremental_visual_difference_search",
+  "skill_type": "visual",
+  "visual_skill_kind": "dynamic",
+  "prior_kind": "dynamic",
+  "bottleneck": "perceptual_tracking",
+  "visual_prior_specs": [
+    {
+      "name": "incremental_comparison_overlay_renderer",
+      "prior_kind": "dynamic",
+      "strategy": "renderer",
+      "content_description": "A runtime overlay protocol for finding the odd item among repeated candidates by marking checked items, current comparison groups, and the current odd-item hypothesis directly on the task image.",
+      "source_frame_index": -1,
+      "crop_region_description": "",
+      "search_query": "",
+      "draw_instructions": "",
+      "visual_rationale": "The dynamic overlay externalizes checked candidates and the current hypothesis so the executor does not have to remember which near-identical items have already been compared.",
+      "visual_encodings": [
+        "Neutral checked mark = candidate already inspected.",
+        "Dashed outline = current local comparison set.",
+        "Hypothesis outline or dot = current odd-item candidate.",
+        "Task image remains visible under all overlay marks."
+      ],
+      "text_exclusions": [
+        "Feature comparison policy and stop criteria stay in Markdown text.",
+        "Final answer explanation stays in text, not in the overlay."
+      ],
+      "forbidden_elements": [
+        "Fixed candidate layouts",
+        "Pre-rendered answer coordinates",
+        "Opaque marks that hide candidate details",
+        "Long prose inside the rendered image"
+      ],
+      "max_text_tokens": 4,
+      "image_generation_prompt": "",
+      "image_generation_model": "",
+      "image_generation_size": "1024x1024",
+      "renderer_name": "incremental_comparison_overlay",
+      "renderer_description": "Render checked candidate markers, the current comparison set, and the current odd-item hypothesis onto the original task image after each local comparison step.",
+      "renderer_inputs": [
+        "base task image",
+        "checked candidate points or boxes",
+        "current comparison set",
+        "current hypothesis point or box",
+        "visual style configuration"
+      ],
+      "renderer_outputs": [
+        "overlay image with visible checked state and hypothesis",
+        "optional machine-readable comparison-state manifest"
+      ]
+    }
+  ],
+  "binding_protocol": {
+    "image_roles": [
+      "Task input image containing repeated candidate items.",
+      "Dynamic overlay image with checked markers, current comparison set, and current odd-item hypothesis rendered onto the same task image."
+    ],
+    "coordinate_system": "Use image coordinates with origin at the top-left; use one coordinate representation consistently throughout a run.",
+    "text_to_visual_binding": [
+      "Neutral marks bind to candidates already checked.",
+      "Dashed outline binds to the current comparison set.",
+      "Hypothesis outline or dot binds to the current odd-item candidate.",
+      "Candidate units are read from the current task image, not from the static preview."
+    ],
+    "task_binding_rules": [
+      "Identify repeated candidate units in the task image.",
+      "Compare one local pair or cluster at a time in a stable scan order.",
+      "After each comparison, render checked state and the current hypothesis back onto the task image.",
+      "Stop only when every candidate has been checked or the difference is visually decisive."
+    ],
+    "anti_leakage_rules": [
+      "Do not copy coordinates, object identities, or layouts from the static preview image.",
+      "Do not pre-render a fixed answer path or odd-item location.",
+      "Do not hide candidate details with large overlay marks."
+    ]
+  },
+  "runtime_protocol": {
+    "mode": "iterative_loop",
+    "state_schema": "{\"round_index\": <int>, \"checked_candidates\": [{\"id\": <string>, \"point\": [<number>, <number>], \"coord_type\": \"pixel|normalized\", \"status\": \"checked|hypothesis|rejected\"}], \"current_comparison_set\": [<string>], \"hypothesis_id\": <string|null>, \"stop_reason\": <string>}",
+    "update_rule": "At round r, inspect the latest overlay image, compare the next unchecked candidate or local cluster, update checked state and hypothesis, then re-render the overlay for the next round.",
+    "stop_condition": "Stop when all candidates are checked, the odd item is visually decisive, no valid candidate units remain, or max_rounds is reached.",
+    "renderer_spec": "Renderer takes the original task image plus current comparison state and draws compact checked markers, a local comparison outline, and a current hypothesis marker. It must preserve candidate details and avoid encoding final answers before they are reached by the current run."
+  },
+  "usage_constraints": [
+    "The image asset is a static preview of overlay semantics, not the runtime prior itself.",
+    "At runtime, render marks onto the current task image after each comparison step.",
+    "Do not copy coordinates, object identities, or layouts from the preview.",
+    "Use text for comparison policy and use the overlay for visible working state."
+  ],
+  "assets": [
+    {
+      "filename": "incremental_comparison_protocol.png",
+      "prior_name": "incremental_comparison_protocol_preview",
+      "prior_kind": "static",
+      "strategy": "draw",
+      "description": "A static preview illustrating the visual semantics of the dynamic comparison overlay; runtime execution uses the renderer protocol.",
+      "width": 1200,
+      "height": 760
+    }
+  ]
+}

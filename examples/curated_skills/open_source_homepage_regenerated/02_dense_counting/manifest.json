@@ -1,0 +1,97 @@
+{
+  "skill_name": "dense_count_anchor_loop",
+  "skill_type": "visual",
+  "visual_skill_kind": "dynamic",
+  "prior_kind": "dynamic",
+  "bottleneck": "perceptual_tracking",
+  "visual_prior_specs": [
+    {
+      "name": "counted_anchor_renderer",
+      "prior_kind": "dynamic",
+      "strategy": "renderer",
+      "content_description": "A dynamic overlay protocol that draws counted-object anchors directly onto the task image after each round so the agent can search for remaining unmarked instances in subsequent rounds.",
+      "source_frame_index": -1,
+      "crop_region_description": "",
+      "search_query": "",
+      "draw_instructions": "",
+      "visual_rationale": "The rendered overlay externalizes counting state directly in image space, which prose alone cannot efficiently maintain in dense scenes with many similar instances. It reduces duplicate counts and supports auditable progressive search by making counted locations immediately visible on the next inspection pass.",
+      "visual_encodings": [
+        "Small solid dot or cross at anchor location = counted instance",
+        "Color 1 = previously confirmed anchors",
+        "Color 2 = anchors newly added in current round",
+        "Optional thin ring around anchor = local duplicate-suppression neighborhood",
+        "Unmarked image regions remain visually unchanged to preserve searchability"
+      ],
+      "text_exclusions": [
+        "Detailed counting policy and inclusion/exclusion criteria must remain in Markdown text.",
+        "Definitions of what constitutes one object instance must remain in task text.",
+        "Stopping rules and duplicate resolution logic must remain in text, not burned into the image."
+      ],
+      "forbidden_elements": [
+        "Long prose instructions inside the rendered image",
+        "benchmark screenshots or dataset-specific exemplars",
+        "class names, expected totals, or answer-like annotations",
+        "large opaque masks that hide nearby candidate objects",
+        "brand logos or application UI elements unrelated to the task"
+      ],
+      "max_text_tokens": 12,
+      "image_generation_prompt": "",
+      "image_generation_model": "",
+      "image_generation_size": "1024x1024",
+      "renderer_name": "iterative_count_anchor_overlay",
+      "renderer_description": "Render compact anchor marks onto the original task image at all confirmed counted-object locations, optionally using a distinct style for anchors added in the current round versus previous rounds, so the next scan can focus on unmarked instances.",
+      "renderer_inputs": [
+        "base task image",
+        "list of confirmed anchors with coordinates",
+        "optional list of anchors newly added this round",
+        "anchor visual style configuration",
+        "coordinate mode"
+      ],
+      "renderer_outputs": [
+        "overlay image with rendered counted anchors",
+        "optional per-anchor render manifest"
+      ]
+    }
+  ],
+  "binding_protocol": {
+    "image_roles": [
+      "task image: source scene containing dense repeated targets",
+      "dynamic overlay image: same task image with counted anchors rendered back onto it for subsequent search rounds"
+    ],
+    "coordinate_system": "Image pixel coordinates with origin at top-left; anchor points stored as normalized or pixel (x, y) positions, but final output must specify which representation is used consistently.",
+    "text_to_visual_binding": [
+      "Rendered small filled dot or cross = counted object anchor.",
+      "Anchor color A = confirmed counted instance from prior rounds.",
+      "Optional highlight color B = newly added anchors in the current round before consolidation.",
+      "Optional faint ring around anchor = local exclusion zone to discourage duplicate counting of the same object.",
+      "No textual labels are required on-image except optional tiny symbolic IDs if auditing is needed; semantics are defined here in text."
+    ],
+    "task_binding_rules": [
+      "Treat one anchor as one counted object instance.",
+      "Anchor placement should follow a consistent canonical point per object, such as center or most visually stable interior point.",
+      "Only add a new anchor when the agent judges it corresponds to a distinct, previously unanchored target.",
+      "If two candidate anchors appear to refer to the same object, keep one canonical anchor and mark the duplicate as rejected or merged in state if such bookkeeping is supported.",
+      "Use the overlay from the previous round as the search image for the next round so already-counted instances are visually suppressed by explicit marks."
+    ],
+    "anti_leakage_rules": [
+      "Do not encode any benchmark-specific object class, scene identity, or expected count into the prior.",
+      "Do not pre-render answer-like coordinates, fixed anchor layouts, or dataset-specific examples.",
+      "Keep all procedural explanations in text; the rendered overlay should contain only minimal visual state needed for tracking counted vs uncounted targets."
+    ]
+  },
+  "runtime_protocol": {
+    "mode": "iterative_loop",
+    "state_schema": "{\"round_index\": <int>, \"anchors\": [{\"id\": <string>, \"x\": <number>, \"y\": <number>, \"coord_type\": \"pixel|normalized\", \"status\": \"confirmed|rejected|merged\", \"round_added\": <int>}], \"new_anchor_ids\": [<string>], \"scan_policy\": <string>, \"stop_reason\": <string>}",
+    "update_rule": "At round r, inspect the overlay image created from all confirmed anchors through round r-1; identify distinct unmarked targets; assign one canonical anchor to each; validate against existing anchors for duplication; append confirmed anchors with round_added = r; re-render overlay for the next round.",
+    "stop_condition": "Stop when an entire scan round over the latest overlay yields zero new confirmed anchors, or when max_rounds is reached.",
+    "renderer_spec": "Renderer takes the original task image plus current anchor state and produces an overlay image by drawing a compact mark at each confirmed anchor, optionally distinguishing anchors added in the current round from earlier anchors. Inputs: base image, anchor list, current round index, visual style config. Outputs: overlay image and optionally a machine-readable overlay manifest. Update rule: after each scan, append newly confirmed anchors, remove or merge duplicates if detected, then re-render all confirmed anchors onto the base image. Stop condition: no new confirmed anchors found in a full round, or round limit reached."
+  },
+  "usage_constraints": [
+    "Use this skill only when the task is true repeated-instance counting or dense target enumeration from imagery.",
+    "Do not use this skill to infer hidden objects that are not visually supported.",
+    "Anchor marks should remain small relative to object size whenever possible to minimize occlusion.",
+    "The skill blueprint defines the protocol, not the target category taxonomy; target semantics must be supplied by the calling task.",
+    "If the image is extremely dense, the calling agent may subdivide the image into regions, but must still reconcile anchors into one global list without double counting across region boundaries."
+  ],
+  "assets": []
+}

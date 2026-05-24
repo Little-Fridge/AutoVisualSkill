@@ -1,0 +1,131 @@
+{
+  "skill_name": "arc_agi_route_state_planning",
+  "skill_type": "visual",
+  "visual_skill_kind": "dynamic",
+  "prior_kind": "dynamic",
+  "bottleneck": "interactive_state_tracking",
+  "visual_prior_specs": [
+    {
+      "name": "arc_route_state_overlay_renderer",
+      "prior_kind": "dynamic",
+      "strategy": "renderer",
+      "content_description": "A dynamic overlay renderer for ARC-AGI-3 frames that writes current position, visited route, waypoint target, and next local plan back onto the current 64x64 game frame.",
+      "source_frame_index": -1,
+      "crop_region_description": "",
+      "search_query": "",
+      "draw_instructions": "",
+      "visual_rationale": "Interactive ARC tasks require sequential visual state. Rendering route progress and the next local plan onto the current frame gives the next model call inspectable state instead of relying on hidden text memory.",
+      "visual_encodings": [
+        "Green trace = route already taken in the current local plan.",
+        "Green box and dot = current controllable object and action focus.",
+        "White ring = visible waypoint or local target.",
+        "Cyan dashed segment = next local plan toward the waypoint.",
+        "Subtle grid = coordinate support for ARC's 64x64 frame."
+      ],
+      "text_exclusions": [
+        "Action reasoning stays in text or structured state, not in the frame.",
+        "Game score and full solution claims stay outside the overlay."
+      ],
+      "forbidden_elements": [
+        "Opaque marks that hide narrow corridors or target pixels",
+        "Long prose labels inside the game frame",
+        "Preview coordinates copied to a different ARC game",
+        "A final-answer mark before the environment confirms success"
+      ],
+      "max_text_tokens": 0,
+      "image_generation_prompt": "",
+      "image_generation_model": "",
+      "image_generation_size": "1024x1024",
+      "renderer_name": "arc_agi_route_state_overlay",
+      "renderer_description": "Render route-state memory directly onto the latest ARC-AGI-3 frame after each action.",
+      "renderer_inputs": [
+        "latest ARC frame",
+        "available actions",
+        "current controllable-object location",
+        "visited route points",
+        "target waypoint or local objective",
+        "next local plan segment"
+      ],
+      "renderer_outputs": [
+        "overlay frame for the next model call",
+        "machine-readable route-state update"
+      ]
+    }
+  ],
+  "binding_protocol": {
+    "image_roles": [
+      "Latest ARC-AGI-3 game frame.",
+      "Dynamic route-state overlay rendered onto the same frame.",
+      "Optional short animation showing state updates across consecutive actions."
+    ],
+    "coordinate_system": "ARC frame coordinates use a 64x64 grid. Renderer coordinates should be derived from the current frame, not from preview images.",
+    "text_to_visual_binding": [
+      "The current-position state field binds to the green focus box and dot.",
+      "The visited-route state field binds to the green trajectory polyline.",
+      "The waypoint state field binds to the white target ring.",
+      "The planned-next segment binds to the cyan dashed line."
+    ],
+    "task_binding_rules": [
+      "Always inspect the latest returned frame before updating route state.",
+      "Render only state that is supported by the current frame and previous executed actions.",
+      "Use the overlaid frame as visual working memory for the next action choice.",
+      "Keep overlays sparse enough that ARC pixels remain readable."
+    ],
+    "anti_leakage_rules": [
+      "Do not treat the preview route as a solution for other ARC levels.",
+      "Do not copy exact coordinates from the preview to a new episode.",
+      "Do not infer game mechanics from this showcase beyond what the current frame and executed actions support."
+    ]
+  },
+  "runtime_protocol": {
+    "mode": "interactive_loop",
+    "state_schema": "{\"step_index\": <int>, \"available_actions\": [<string>], \"current_position\": [<number>, <number>], \"visited_route\": [[<number>, <number>]], \"target_waypoint\": [<number>, <number>] | null, \"next_action\": <string>, \"next_plan_segment\": [[<number>, <number>]], \"rejected_branches\": [[<number>, <number>]], \"stop_reason\": <string>}",
+    "update_rule": "After each ARC action, parse the returned frame, update the route-state object, and render the state as sparse marks on the new frame before the next model call.",
+    "stop_condition": "Stop when the level is solved, a waypoint is reached and a new plan is needed, the game ends, or no safe action remains.",
+    "renderer_spec": "Renderer draws thin green route lines, a green current-position box, a white waypoint ring, and a cyan dashed plan segment on the current ARC frame. It must preserve game pixels and avoid text labels inside the frame."
+  },
+  "usage_constraints": [
+    "This showcase demonstrates a short route-state segment on ARC-AGI-3 ls20; it is not a full benchmark result.",
+    "At runtime, update route state from the latest environment frame, not from cached preview coordinates.",
+    "Keep overlays sparse and non-opaque so the next model call can still inspect the game frame.",
+    "Use official ARC-AGI-3 scorecards for quantitative claims; this curated case is a qualitative visual-skill example."
+  ],
+  "assets": [
+    {
+      "filename": "arc_ls20_source_frame.png",
+      "prior_name": "arc_ls20_source_frame",
+      "prior_kind": "static",
+      "strategy": "source",
+      "description": "Screened intermediate frame from the public ARC-AGI-3 ls20 environment rendered with the official toolkit.",
+      "width": 768,
+      "height": 768
+    },
+    {
+      "filename": "arc_ls20_route_state_overlay.png",
+      "prior_name": "arc_ls20_route_state_overlay",
+      "prior_kind": "dynamic",
+      "strategy": "renderer",
+      "description": "The same screened ARC frame with route-state marks rendered onto it: current object, visited route, and waypoint.",
+      "width": 768,
+      "height": 768
+    },
+    {
+      "filename": "arc_ls20_route_state_demo.gif",
+      "prior_name": "arc_ls20_route_state_demo",
+      "prior_kind": "dynamic",
+      "strategy": "renderer",
+      "description": "Animated full-route comparison for the same official ARC-AGI-3 episode: after a shared prefix, direct Gemini chooses ACTION2/down and goes off-route, while the visual-skill side chooses ACTION1/up and follows the official route.",
+      "width": 1720,
+      "height": 1060
+    },
+    {
+      "filename": "arc_ls20_runtime_trace.png",
+      "prior_name": "arc_ls20_runtime_trace",
+      "prior_kind": "dynamic",
+      "strategy": "renderer",
+      "description": "Side-by-side static preview contrasting the direct off-route branch with the visual-skill branch after it follows the official route.",
+      "width": 1720,
+      "height": 1060
+    }
+  ]
+}

@@ -1,0 +1,86 @@
+{
+  "skill_name": "read_bar_chart_value",
+  "skill_type": "visual",
+  "visual_skill_kind": "static",
+  "prior_kind": "static",
+  "bottleneck": "protocol_ambiguity",
+  "visual_prior_specs": [
+    {
+      "name": "bar_projection_guide",
+      "prior_kind": "static",
+      "strategy": "overlay",
+      "content_description": "An overlay on the provided bar chart demonstrating how to read the value of bar C by projecting a horizontal line from its top edge to the y-axis.",
+      "source_frame_index": 0,
+      "crop_region_description": "",
+      "search_query": "",
+      "draw_instructions": "Draw a distinct colored (e.g., red) dashed horizontal line starting exactly from the top-center of bar C and extending leftward until it intersects the vertical y-axis. Add a small colored dot at the exact intersection point on the y-axis. Highlight the outline of bar C in the same color.",
+      "visual_rationale": "Visually demonstrates the spatial alignment and horizontal projection required to map a bar's height to a numerical axis, establishing the geometric convention for reading chart values.",
+      "visual_encodings": [
+        "Colored dashed line = horizontal projection path",
+        "Colored dot = intersection point on the y-axis",
+        "Colored outline = target bar being measured"
+      ],
+      "text_exclusions": [
+        "Do not write the actual numerical value on the image",
+        "Do not add textual explanations of the steps"
+      ],
+      "forbidden_elements": [
+        "Text labels",
+        "Numbers",
+        "Long captions",
+        "Answer coordinates"
+      ],
+      "max_text_tokens": 0,
+      "image_generation_prompt": "",
+      "image_generation_model": "",
+      "image_generation_size": "1024x1024",
+      "renderer_name": "",
+      "renderer_description": "",
+      "renderer_inputs": [],
+      "renderer_outputs": []
+    }
+  ],
+  "binding_protocol": {
+    "image_roles": [
+      "source_chart",
+      "projection_overlay_prior"
+    ],
+    "coordinate_system": "relative to chart axes",
+    "text_to_visual_binding": [
+      "The 'target bar' in text corresponds to the highlighted bar in the prior.",
+      "The 'horizontal projection' corresponds to the dashed line.",
+      "The 'intersection point' corresponds to the dot on the y-axis."
+    ],
+    "task_binding_rules": [
+      "Apply the projection technique shown in the prior to the specific bar requested in the task."
+    ],
+    "anti_leakage_rules": [
+      "Do not hardcode the value of bar C from the prior as the answer for future tasks.",
+      "The prior is a generic guide; always read the value from the task's specific chart and requested category.",
+      "Do not treat floating numeric annotations as axis evidence unless the task explicitly asks for annotation text."
+    ]
+  },
+  "runtime_protocol": {
+    "mode": "single_turn",
+    "state_schema": "",
+    "update_rule": "",
+    "stop_condition": "",
+    "renderer_spec": ""
+  },
+  "usage_constraints": [
+    "Assumes the chart has a linear y-axis.",
+    "Assumes the chart is oriented vertically (bars grow upwards).",
+    "If an annotation conflicts with the projected axis value, prefer the projected axis value."
+  ],
+  "assets": [
+    {
+      "filename": "bar_projection_guide.png",
+      "prior_name": "bar_projection_guide",
+      "prior_kind": "static",
+      "strategy": "overlay",
+      "description": "An overlay on the provided bar chart demonstrating how to read the value of bar C by projecting a horizontal line from its top edge to the y-axis.",
+      "width": 900,
+      "height": 620
+    }
+  ]
+}

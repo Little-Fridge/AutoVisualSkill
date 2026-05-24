@@ -1,0 +1,1001 @@
+{
+  "model": "gemini-3-pro-preview",
+  "base_url": "https://api.nuwaflux.com/v1",
+  "generated_at": "2026-05-28T10:39:50.832784+00:00",
+  "credential_note": "API credentials are supplied through environment variables and are not stored.",
+  "cases": {
+    "gui": {
+      "title": "Button click target",
+      "task_prompt": "Task: click the Search control in this toolbar. Return compact JSON with keys answer, click_point_px, confidence, and evidence. The click_point_px must be pixel coordinates in the task image.",
+      "expected": "Click the center of the Search button hitbox, not the off-center magnifier glyph.",
+      "task_images": [
+        "examples/task_execution_cases/assets/gui_hard_hitbox_task.png"
+      ],
+      "skill_dir": "examples/curated_skills/open_source_homepage_regenerated/03_gui_icon_grounding",
+      "skill_images": [
+        "examples/curated_skills/open_source_homepage_regenerated/03_gui_icon_grounding/assets/search_button_hitbox_overlay.png"
+      ],
+      "without_skill": {
+        "raw": "{\n  \"answer\": \"click\",\n  \"click_point_px\": [300, 210],\n  \"confidence\": 0.99,\n  \"evidence\": \"The Search control is the second button from the left, indicated by the magnifying glass icon. The task requires clicking the center of its bounding box, which is wider than the other buttons. The center of this bounding box is at approximately [300, 210].\"\n}",
+        "parsed": {
+          "answer": "click",
+          "click_point_px": [
+            300,
+            210
+          ],
+          "confidence": 0.99,
+          "evidence": "The Search control is the second button from the left, indicated by the magnifying glass icon. The task requires clicking the center of its bounding box, which is wider than the other buttons. The center of this bounding box is at approximately [300, 210]."
+        },
+        "usage": {
+          "completion_tokens": 1176,
+          "prompt_tokens": 1180,
+          "total_tokens": 2356,
+          "completion_tokens_details": {
+            "accepted_prediction_tokens": null,
+            "audio_tokens": 0,
+            "reasoning_tokens": 1073,
+            "rejected_prediction_tokens": null,
+            "text_tokens": 0
+          },
+          "prompt_tokens_details": {
+            "audio_tokens": 0,
+            "cached_tokens": 0,
+            "text_tokens": 124,
+            "image_tokens": 0
+          },
+          "input_tokens": 0,
+          "output_tokens": 0,
+          "input_tokens_details": null,
+          "claude_cache_creation_5_m_tokens": 0,
+          "claude_cache_creation_1_h_tokens": 0
+        }
+      },
+      "with_skill": {
+        "raw": "```json\n{\"answer\": \"search_control\", \"click_point_px\": [320, 225], \"confidence\": 1.0, \"evidence\": \"The Search control is the second button from the left in the toolbar, identified by the magnifying glass icon. Its clickable hitbox is defined by the rounded rectangle border, which is wider than the other buttons. The geometric center of this bounding box is at [320, 225].\"}\n```",
+        "parsed": {
+          "answer": "search_control",
+          "click_point_px": [
+            320,
+            225
+          ],
+          "confidence": 1.0,
+          "evidence": "The Search control is the second button from the left in the toolbar, identified by the magnifying glass icon. Its clickable hitbox is defined by the rounded rectangle border, which is wider than the other buttons. The geometric center of this bounding box is at [320, 225]."
+        },
+        "usage": {
+          "completion_tokens": 2125,
+          "prompt_tokens": 2920,
+          "total_tokens": 5045,
+          "completion_tokens_details": {
+            "accepted_prediction_tokens": null,
+            "audio_tokens": 0,
+            "reasoning_tokens": 2023,
+            "rejected_prediction_tokens": null,
+            "text_tokens": 0
+          },
+          "prompt_tokens_details": {
+            "audio_tokens": 0,
+            "cached_tokens": 0,
+            "text_tokens": 808,
+            "image_tokens": 0
+          },
+          "input_tokens": 0,
+          "output_tokens": 0,
+          "input_tokens_details": null,
+          "claude_cache_creation_5_m_tokens": 0,
+          "claude_cache_creation_1_h_tokens": 0
+        }
+      }
+    },
+    "table": {
+      "title": "Table cell intersection",
+      "task_prompt": "Task: locate the target cell at row Y and column Q2. Return compact JSON with keys answer, cell, target_cell_bbox_px, center_px, confidence, and evidence. All coordinates must be in the task image.",
+      "expected": "Target cell is row Y, column Q2 in the held-out table.",
+      "task_images": [
+        "examples/task_execution_cases/assets/table_heldout_task.png"
+      ],
+      "skill_dir": "examples/curated_skills/open_source_homepage_regenerated/04_table_cell_intersection",
+      "skill_images": [
+        "examples/curated_skills/open_source_homepage_regenerated/04_table_cell_intersection/assets/row_col_intersection_overlay.png"
+      ],
+      "without_skill": {
+        "raw": "{\n  \"answer\": \"Row Y, Column Q2\",\n  \"cell\": \"Y-Q2\",\n  \"target_cell_bbox_px\": [397, 280, 499, 337],\n  \"center_px\": [448, 308],\n  \"confidence\": 0.99,\n  \"evidence\": \"The target cell is located at the intersection of the third row, labeled 'Y', and the second column, labeled 'Q2'.\"\n}",
+        "parsed": {
+          "answer": "Row Y, Column Q2",
+          "cell": "Y-Q2",
+          "target_cell_bbox_px": [
+            397,
+            280,
+            499,
+            337
+          ],
+          "center_px": [
+            448,
+            308
+          ],
+          "confidence": 0.99,
+          "evidence": "The target cell is located at the intersection of the third row, labeled 'Y', and the second column, labeled 'Q2'."
+        },
+        "usage": {
+          "completion_tokens": 3297,
+          "prompt_tokens": 1185,
+          "total_tokens": 4482,
+          "completion_tokens_details": {
+            "accepted_prediction_tokens": null,
+            "audio_tokens": 0,
+            "reasoning_tokens": 3178,
+            "rejected_prediction_tokens": null,
+            "text_tokens": 0
+          },
+          "prompt_tokens_details": {
+            "audio_tokens": 0,
+            "cached_tokens": 0,
+            "text_tokens": 129,
+            "image_tokens": 0
+          },
+          "input_tokens": 0,
+          "output_tokens": 0,
+          "input_tokens_details": null,
+          "claude_cache_creation_5_m_tokens": 0,
+          "claude_cache_creation_1_h_tokens": 0
+        }
+      },
+      "with_skill": {
+        "raw": "```json\n{\n  \"answer\": \"dot\",\n  \"cell\": \"Y, Q2\",\n  \"target_cell_bbox_px\": [357, 247, 449, 298],\n  \"center_px\": [403, 272],\n  \"confidence\": 0.99,\n  \"evidence\": \"Located row Y (third row) and column Q2 (second column). The target cell is the intersection of this row and column.\"\n}\n```",
+        "parsed": {
+          "answer": "dot",
+          "cell": "Y, Q2",
+          "target_cell_bbox_px": [
+            357,
+            247,
+            449,
+            298
+          ],
+          "center_px": [
+            403,
+            272
+          ],
+          "confidence": 0.99,
+          "evidence": "Located row Y (third row) and column Q2 (second column). The target cell is the intersection of this row and column."
+        },
+        "usage": {
+          "completion_tokens": 1630,
+          "prompt_tokens": 3071,
+          "total_tokens": 4701,
+          "completion_tokens_details": {
+            "accepted_prediction_tokens": null,
+            "audio_tokens": 0,
+            "reasoning_tokens": 1511,
+            "rejected_prediction_tokens": null,
+            "text_tokens": 0
+          },
+          "prompt_tokens_details": {
+            "audio_tokens": 0,
+            "cached_tokens": 0,
+            "text_tokens": 935,
+            "image_tokens": 0
+          },
+          "input_tokens": 0,
+          "output_tokens": 0,
+          "input_tokens_details": null,
+          "claude_cache_creation_5_m_tokens": 0,
+          "claude_cache_creation_1_h_tokens": 0
+        }
+      }
+    },
+    "chart": {
+      "title": "Bar chart projection",
+      "task_prompt": "Task: read the value of bar C from the chart image. Return compact JSON with keys answer, value_estimate, target_bar_bbox_px, projection_y_px, evidence_source_bbox_px, confidence, and evidence.",
+      "expected": "Bar C is about 73; the floating label 80 is a distractor, not the axis readout.",
+      "task_images": [
+        "examples/task_execution_cases/assets/chart_heldout_task.png"
+      ],
+      "skill_dir": "examples/curated_skills/open_source_homepage_regenerated/05_chart_projection",
+      "skill_images": [
+        "examples/curated_skills/open_source_homepage_regenerated/05_chart_projection/assets/bar_projection_guide.png"
+      ],
+      "without_skill": {
+        "raw": "{\n  \"answer\": 73,\n  \"value_estimate\": 73.25,\n  \"target_bar_bbox_px\": [423, 227, 466, 360],\n  \"projection_y_px\": 227,\n  \"evidence_source_bbox_px\": [148, 188, 178, 290],\n  \"confidence\": 0.95,\n  \"evidence\": \"Top of bar C is at y=227. Y-axis 60 is at y=280, 80 is at y=200. Interpolating gives ~73. Floating label 80 is a distractor.\"\n}",
+        "parsed": {
+          "answer": 73,
+          "value_estimate": 73.25,
+          "target_bar_bbox_px": [
+            423,
+            227,
+            466,
+            360
+          ],
+          "projection_y_px": 227,
+          "evidence_source_bbox_px": [
+            148,
+            188,
+            178,
+            290
+          ],
+          "confidence": 0.95,
+          "evidence": "Top of bar C is at y=227. Y-axis 60 is at y=280, 80 is at y=200. Interpolating gives ~73. Floating label 80 is a distractor."
+        },
+        "usage": {
+          "completion_tokens": 2198,
+          "prompt_tokens": 1195,
+          "total_tokens": 3393,
+          "completion_tokens_details": {
+            "accepted_prediction_tokens": null,
+            "audio_tokens": 0,
+            "reasoning_tokens": 2025,
+            "rejected_prediction_tokens": null,
+            "text_tokens": 0
+          },
+          "prompt_tokens_details": {
+            "audio_tokens": 0,
+            "cached_tokens": 0,
+            "text_tokens": 139,
+            "image_tokens": 0
+          },
+          "input_tokens": 0,
+          "output_tokens": 0,
+          "input_tokens_details": null,
+          "claude_cache_creation_5_m_tokens": 0,
+          "claude_cache_creation_1_h_tokens": 0
+        }
+      },
+      "with_skill": {
+        "raw": "```json\n{\n  \"answer\": \"73\",\n  \"value_estimate\": 73,\n  \"target_bar_bbox_px\": [424, 288, 465, 456],\n  \"projection_y_px\": 288,\n  \"evidence_source_bbox_px\": [149, 252, 200, 354],\n  \"confidence\": 0.95,\n  \"evidence\": \"The top edge of bar C is projected horizontally to the y-axis at y=288. This projection falls between the y-axis ticks for 60 (y=354) and 80 (y=252). Interpolating between these ticks yields a value of approximately 73. The floating label '80' is ignored as instructed.\"\n}\n```",
+        "parsed": {
+          "answer": "73",
+          "value_estimate": 73,
+          "target_bar_bbox_px": [
+            424,
+            288,
+            465,
+            456
+          ],
+          "projection_y_px": 288,
+          "evidence_source_bbox_px": [
+            149,
+            252,
+            200,
+            354
+          ],
+          "confidence": 0.95,
+          "evidence": "The top edge of bar C is projected horizontally to the y-axis at y=288. This projection falls between the y-axis ticks for 60 (y=354) and 80 (y=252). Interpolating between these ticks yields a value of approximately 73. The floating label '80' is ignored as instructed."
+        },
+        "usage": {
+          "completion_tokens": 1843,
+          "prompt_tokens": 2421,
+          "total_tokens": 4264,
+          "completion_tokens_details": {
+            "accepted_prediction_tokens": null,
+            "audio_tokens": 0,
+            "reasoning_tokens": 1644,
+            "rejected_prediction_tokens": null,
+            "text_tokens": 0
+          },
+          "prompt_tokens_details": {
+            "audio_tokens": 0,
+            "cached_tokens": 0,
+            "text_tokens": 285,
+            "image_tokens": 0
+          },
+          "input_tokens": 0,
+          "output_tokens": 0,
+          "input_tokens_details": null,
+          "claude_cache_creation_5_m_tokens": 0,
+          "claude_cache_creation_1_h_tokens": 0
+        }
+      }
+    },
+    "presentation": {
+      "title": "PPT critique-and-redraw",
+      "task_prompt": "Task: redesign this held-out teaching slide into a cleaner professional PPT slide while preserving the scientific content. Return compact JSON with keys summary, layout_plan, concrete_changes, critique_regions, and preserved_content. critique_regions should be a short list of objects with label, issue, and bbox_px in the task image.",
+      "expected": "Preserve urban-heat content while improving hierarchy, spacing, and diagram clarity.",
+      "task_images": [
+        "examples/task_execution_cases/assets/ppt_heldout_task.png"
+      ],
+      "skill_dir": "examples/curated_skills/open_source_homepage_regenerated/13_presentation_style_redraw",
+      "skill_images": [
+        "examples/curated_skills/open_source_homepage_regenerated/13_presentation_style_redraw/assets/style_reference_board.png",
+        "examples/curated_skills/open_source_homepage_regenerated/13_presentation_style_redraw/assets/real_ppt_nasa_critique_overlay.png"
+      ],
+      "without_skill": {
+        "raw": "{\n  \"summary\": \"Redesign to a professional layout by removing clashing background colors, standardizing fonts, and refining the heat flow diagram.\",\n  \"layout_plan\": \"Two-column layout. Left: clean bullet points without bounding box. Right: modernized diagram with subtle gradients and clear labels. Header: simple text without heavy background.\",\n  \"concrete_changes\": \"Remove cyan/red/green background boxes. Change title to standard dark text. Replace orange arrows with sleek, uniform vectors. Remove distracting footer dots.\",\n  \"critique_regions\": [\n    {\n      \"label\": \"title_box\",\n      \"issue\": \"Heavy green background box is distracting\",\n      \"bbox_px\": [74, 66, 721, 150]\n    },\n    {\n      \"label\": \"left_content_box\",\n      \"issue\": \"Unnecessary cyan border and fill\",\n      \"bbox_px\": [83, 220, 564, 589]\n    },\n    {\n      \"label\": \"right_diagram_box\",\n      \"issue\": \"Clashing red background and amateur orange arrows\",\n      \"bbox_px\": [621, 211, 1159, 600]\n    },\n    {\n      \"label\": \"footer\",\n      \"issue\": \"Distracting decorative elements and cramped text\",\n      \"bbox_px\": [75, 618, 1200, 664]\n    }\n  ],\n  \"preserved_content\": \"Title text, subtitle, all four bullet points, diagram concept (roads/roofs causing upward heat flow).\"\n}",
+        "parsed": {
+          "summary": "Redesign to a professional layout by removing clashing background colors, standardizing fonts, and refining the heat flow diagram.",
+          "layout_plan": "Two-column layout. Left: clean bullet points without bounding box. Right: modernized diagram with subtle gradients and clear labels. Header: simple text without heavy background.",
+          "concrete_changes": "Remove cyan/red/green background boxes. Change title to standard dark text. Replace orange arrows with sleek, uniform vectors. Remove distracting footer dots.",
+          "critique_regions": [
+            {
+              "label": "title_box",
+              "issue": "Heavy green background box is distracting",
+              "bbox_px": [
+                74,
+                66,
+                721,
+                150
+              ]
+            },
+            {
+              "label": "left_content_box",
+              "issue": "Unnecessary cyan border and fill",
+              "bbox_px": [
+                83,
+                220,
+                564,
+                589
+              ]
+            },
+            {
+              "label": "right_diagram_box",
+              "issue": "Clashing red background and amateur orange arrows",
+              "bbox_px": [
+                621,
+                211,
+                1159,
+                600
+              ]
+            },
+            {
+              "label": "footer",
+              "issue": "Distracting decorative elements and cramped text",
+              "bbox_px": [
+                75,
+                618,
+                1200,
+                664
+              ]
+            }
+          ],
+          "preserved_content": "Title text, subtitle, all four bullet points, diagram concept (roads/roofs causing upward heat flow)."
+        },
+        "usage": {
+          "completion_tokens": 2193,
+          "prompt_tokens": 1248,
+          "total_tokens": 3441,
+          "completion_tokens_details": {
+            "accepted_prediction_tokens": null,
+            "audio_tokens": 0,
+            "reasoning_tokens": 1811,
+            "rejected_prediction_tokens": null,
+            "text_tokens": 0
+          },
+          "prompt_tokens_details": {
+            "audio_tokens": 0,
+            "cached_tokens": 0,
+            "text_tokens": 148,
+            "image_tokens": 0
+          },
+          "input_tokens": 0,
+          "output_tokens": 0,
+          "input_tokens_details": null,
+          "claude_cache_creation_5_m_tokens": 0,
+          "claude_cache_creation_1_h_tokens": 0
+        }
+      },
+      "with_skill": {
+        "raw": "{\n  \"summary\": \"Redesign to a clean, professional style by removing heavy containers, refining the diagram, and improving typography.\",\n  \"layout_plan\": \"Two-column layout: left column for explanatory text, right column for the heat flow diagram. Clean header without background boxes.\",\n  \"concrete_changes\": [\n    \"Remove dark green title background.\",\n    \"Remove cyan and red container boxes.\",\n    \"Replace default orange arrows with sleek, modern arrows.\",\n    \"Remove footer decorative dots and simplify text.\",\n    \"Use a consistent, restrained color palette.\"\n  ],\n  \"critique_regions\": [\n    {\n      \"label\": \"Heavy title block\",\n      \"issue\": \"Overpowering background color\",\n      \"bbox_px\": [91, 58, 209, 563]\n    },\n    {\n      \"label\": \"Unnecessary container\",\n      \"issue\": \"Traps text, adds visual noise\",\n      \"bbox_px\": [306, 65, 819, 441]\n    },\n    {\n      \"label\": \"Cluttered diagram\",\n      \"issue\": \"Box traps diagram, arrows are generic\",\n      \"bbox_px\": [292, 485, 834, 906]\n    },\n    {\n      \"label\": \"Footer noise\",\n      \"issue\": \"Distracting decorative elements\",\n      \"bbox_px\": [858, 58, 922, 937]\n    }\n  ],\n  \"preserved_content\": [\n    \"July 2024: Urban Heat Islands\",\n    \"How city surfaces trap heat.\",\n    \"Dark roads and roofs absorb sunlight.\",\n    \"Less vegetation means less evaporative cooling.\",\n    \"Dense buildings slow heat release after sunset.\",\n    \"Urban areas can stay several degrees warmer.\",\n    \"Heat flow diagram\",\n    \"Roads + Roofs\",\n    \"Causes Heating\"\n  ]\n}",
+        "parsed": {
+          "summary": "Redesign to a clean, professional style by removing heavy containers, refining the diagram, and improving typography.",
+          "layout_plan": "Two-column layout: left column for explanatory text, right column for the heat flow diagram. Clean header without background boxes.",
+          "concrete_changes": [
+            "Remove dark green title background.",
+            "Remove cyan and red container boxes.",
+            "Replace default orange arrows with sleek, modern arrows.",
+            "Remove footer decorative dots and simplify text.",
+            "Use a consistent, restrained color palette."
+          ],
+          "critique_regions": [
+            {
+              "label": "Heavy title block",
+              "issue": "Overpowering background color",
+              "bbox_px": [
+                91,
+                58,
+                209,
+                563
+              ]
+            },
+            {
+              "label": "Unnecessary container",
+              "issue": "Traps text, adds visual noise",
+              "bbox_px": [
+                306,
+                65,
+                819,
+                441
+              ]
+            },
+            {
+              "label": "Cluttered diagram",
+              "issue": "Box traps diagram, arrows are generic",
+              "bbox_px": [
+                292,
+                485,
+                834,
+                906
+              ]
+            },
+            {
+              "label": "Footer noise",
+              "issue": "Distracting decorative elements",
+              "bbox_px": [
+                858,
+                58,
+                922,
+                937
+              ]
+            }
+          ],
+          "preserved_content": [
+            "July 2024: Urban Heat Islands",
+            "How city surfaces trap heat.",
+            "Dark roads and roofs absorb sunlight.",
+            "Less vegetation means less evaporative cooling.",
+            "Dense buildings slow heat release after sunset.",
+            "Urban areas can stay several degrees warmer.",
+            "Heat flow diagram",
+            "Roads + Roofs",
+            "Causes Heating"
+          ]
+        },
+        "usage": {
+          "completion_tokens": 2368,
+          "prompt_tokens": 4776,
+          "total_tokens": 7144,
+          "completion_tokens_details": {
+            "accepted_prediction_tokens": null,
+            "audio_tokens": 0,
+            "reasoning_tokens": 1912,
+            "rejected_prediction_tokens": null,
+            "text_tokens": 0
+          },
+          "prompt_tokens_details": {
+            "audio_tokens": 0,
+            "cached_tokens": 0,
+            "text_tokens": 1496,
+            "image_tokens": 0
+          },
+          "input_tokens": 0,
+          "output_tokens": 0,
+          "input_tokens_details": null,
+          "claude_cache_creation_5_m_tokens": 0,
+          "claude_cache_creation_1_h_tokens": 0
+        }
+      }
+    },
+    "counting": {
+      "title": "Dense counting",
+      "task_prompt": "Task: count how many red circular tokens with a white center dot are visible. Return compact JSON with keys answer, count, confidence, and evidence. Ignore solid red tokens and blue, purple, and gray distractors.",
+      "expected": "There are 96 red circular tokens with a white center dot.",
+      "task_images": [
+        "examples/task_execution_cases/assets/counting_hard_task.png"
+      ],
+      "skill_dir": "examples/curated_skills/open_source_homepage_regenerated/02_dense_counting",
+      "skill_images": [],
+      "runtime_images": [
+        "examples/task_execution_cases/assets/counting_hard_task_runtime_overlay.png"
+      ],
+      "without_skill": {
+        "raw": "{\"answer\": 64, \"count\": 64, \"confidence\": 0.95, \"evidence\": \"Counted 64 red circular tokens with a white center dot while ignoring solid red tokens and non-red distractors.\"}",
+        "parsed": {
+          "answer": 64,
+          "count": 64,
+          "confidence": 0.95,
+          "evidence": "Counted 64 red circular tokens with a white center dot while ignoring solid red tokens and non-red distractors."
+        },
+        "usage": {
+          "completion_tokens": 2015,
+          "prompt_tokens": 1160,
+          "total_tokens": 3175,
+          "completion_tokens_details": {
+            "accepted_prediction_tokens": null,
+            "audio_tokens": 0,
+            "reasoning_tokens": 1962,
+            "rejected_prediction_tokens": null,
+            "text_tokens": 0
+          },
+          "prompt_tokens_details": {
+            "audio_tokens": 0,
+            "cached_tokens": 0,
+            "text_tokens": 89,
+            "image_tokens": 0
+          },
+          "input_tokens": 0,
+          "output_tokens": 0,
+          "input_tokens_details": null,
+          "claude_cache_creation_5_m_tokens": 0,
+          "claude_cache_creation_1_h_tokens": 0
+        }
+      },
+      "with_skill": {
+        "raw": "```json\n{\n  \"answer\": 96,\n  \"count\": 96,\n  \"confidence\": 0.99,\n  \"evidence\": \"The visual artifact highlights all red circular tokens with a white center dot using green circles and provides a total count of 96 in the top right corner.\"\n}\n```",
+        "parsed": {
+          "answer": 96,
+          "count": 96,
+          "confidence": 0.99,
+          "evidence": "The visual artifact highlights all red circular tokens with a white center dot using green circles and provides a total count of 96 in the top right corner."
+        },
+        "usage": {
+          "completion_tokens": 323,
+          "prompt_tokens": 4915,
+          "total_tokens": 5238,
+          "completion_tokens_details": {
+            "accepted_prediction_tokens": null,
+            "audio_tokens": 0,
+            "reasoning_tokens": 249,
+            "rejected_prediction_tokens": null,
+            "text_tokens": 0
+          },
+          "prompt_tokens_details": {
+            "audio_tokens": 0,
+            "cached_tokens": 0,
+            "text_tokens": 2773,
+            "image_tokens": 0
+          },
+          "input_tokens": 0,
+          "output_tokens": 0,
+          "input_tokens_details": null,
+          "claude_cache_creation_5_m_tokens": 0,
+          "claude_cache_creation_1_h_tokens": 0
+        }
+      }
+    },
+    "lines": {
+      "title": "Line tracing",
+      "task_prompt": "Task: trace the connected route from A to B. Return compact JSON with keys answer, route, confidence, and evidence. Do not use an edge unless it is visibly connected. Use visible node labels when available.",
+      "expected": "Trace A -> 1 -> 2 -> 3 -> 4 -> B in the held-out graph.",
+      "task_images": [
+        "examples/task_execution_cases/assets/line_heldout_task.png"
+      ],
+      "skill_dir": "examples/curated_skills/open_source_homepage_regenerated/06_connect_lines",
+      "skill_images": [],
+      "without_skill": {
+        "raw": "{\n  \"answer\": \"A -> 1 -> 2 -> 3 -> 4 -> V -> B\",\n  \"route\": [\"A\", \"1\", \"2\", \"3\", \"4\", \"V\", \"B\"],\n  \"confidence\": \"high\",\n  \"evidence\": \"Traced connected lines from A to 1, 1 to 2, 2 to 3, 3 to 4, 4 to V, and V to B.\"\n}",
+        "parsed": {
+          "answer": "A -> 1 -> 2 -> 3 -> 4 -> V -> B",
+          "route": [
+            "A",
+            "1",
+            "2",
+            "3",
+            "4",
+            "V",
+            "B"
+          ],
+          "confidence": "high",
+          "evidence": "Traced connected lines from A to 1, 1 to 2, 2 to 3, 3 to 4, 4 to V, and V to B."
+        },
+        "usage": {
+          "completion_tokens": 1797,
+          "prompt_tokens": 1201,
+          "total_tokens": 2998,
+          "completion_tokens_details": {
+            "accepted_prediction_tokens": null,
+            "audio_tokens": 0,
+            "reasoning_tokens": 1692,
+            "rejected_prediction_tokens": null,
+            "text_tokens": 0
+          },
+          "prompt_tokens_details": {
+            "audio_tokens": 0,
+            "cached_tokens": 0,
+            "text_tokens": 130,
+            "image_tokens": 0
+          },
+          "input_tokens": 0,
+          "output_tokens": 0,
+          "input_tokens_details": null,
+          "claude_cache_creation_5_m_tokens": 0,
+          "claude_cache_creation_1_h_tokens": 0
+        }
+      },
+      "with_skill": {
+        "raw": "{\n  \"answer\": \"A-1-2-3-4-V-B\",\n  \"route\": [\n    \"A\",\n    \"1\",\n    \"2\",\n    \"3\",\n    \"4\",\n    \"V\",\n    \"B\"\n  ],\n  \"confidence\": \"high\",\n  \"evidence\": \"Visual trace confirms continuous double-line connections from A to 1, 1 to 2, 2 to 3, 3 to 4, 4 to V, and V to B.\"\n}",
+        "parsed": {
+          "answer": "A-1-2-3-4-V-B",
+          "route": [
+            "A",
+            "1",
+            "2",
+            "3",
+            "4",
+            "V",
+            "B"
+          ],
+          "confidence": "high",
+          "evidence": "Visual trace confirms continuous double-line connections from A to 1, 1 to 2, 2 to 3, 3 to 4, 4 to V, and V to B."
+        },
+        "usage": {
+          "completion_tokens": 1340,
+          "prompt_tokens": 3690,
+          "total_tokens": 5030,
+          "completion_tokens_details": {
+            "accepted_prediction_tokens": null,
+            "audio_tokens": 0,
+            "reasoning_tokens": 1217,
+            "rejected_prediction_tokens": null,
+            "text_tokens": 0
+          },
+          "prompt_tokens_details": {
+            "audio_tokens": 0,
+            "cached_tokens": 0,
+            "text_tokens": 2619,
+            "image_tokens": 0
+          },
+          "input_tokens": 0,
+          "output_tokens": 0,
+          "input_tokens_details": null,
+          "claude_cache_creation_5_m_tokens": 0,
+          "claude_cache_creation_1_h_tokens": 0
+        }
+      }
+    },
+    "geometry": {
+      "title": "Geometry auxiliary lines",
+      "task_prompt": "Task: propose the first useful auxiliary construction for this isosceles-triangle diagram. Return compact JSON with keys answer, construction, visual_marks, confidence, and evidence. Keep visual_marks as short point/segment labels, not pixel coordinate arrays.",
+      "expected": "Construct the altitude/median from P to QR in the held-out triangle.",
+      "task_images": [
+        "examples/task_execution_cases/assets/geometry_heldout_task.png"
+      ],
+      "skill_dir": "examples/curated_skills/open_source_homepage_regenerated/10_geometry_auxiliary_lines",
+      "skill_images": [
+        "examples/curated_skills/open_source_homepage_regenerated/10_geometry_auxiliary_lines/assets/geometry_auxiliary_overlay.png"
+      ],
+      "without_skill": {
+        "raw": "{\n  \"answer\": \"Construct the altitude from P to QR\",\n  \"construction\": \"Draw a line segment from apex P perpendicular to base QR, intersecting QR at a new point S.\",\n  \"visual_marks\": \"P, Q, R, PQ, PR, QR\",\n  \"confidence\": \"0.99\",\n  \"evidence\": \"The image displays an isosceles triangle PQR with PQ = PR, indicated by blue tick marks. Drawing the altitude, median, or angle bisector from the apex P to the base QR is the standard first auxiliary construction for isosceles triangles. It divides the triangle into two congruent right triangles, which is highly useful for proving base angle equality or solving for unknown dimensions.\"\n}",
+        "parsed": {
+          "answer": "Construct the altitude from P to QR",
+          "construction": "Draw a line segment from apex P perpendicular to base QR, intersecting QR at a new point S.",
+          "visual_marks": "P, Q, R, PQ, PR, QR",
+          "confidence": "0.99",
+          "evidence": "The image displays an isosceles triangle PQR with PQ = PR, indicated by blue tick marks. Drawing the altitude, median, or angle bisector from the apex P to the base QR is the standard first auxiliary construction for isosceles triangles. It divides the triangle into two congruent right triangles, which is highly useful for proving base angle equality or solving for unknown dimensions."
+        },
+        "usage": {
+          "completion_tokens": 1031,
+          "prompt_tokens": 1201,
+          "total_tokens": 2232,
+          "completion_tokens_details": {
+            "accepted_prediction_tokens": null,
+            "audio_tokens": 0,
+            "reasoning_tokens": 877,
+            "rejected_prediction_tokens": null,
+            "text_tokens": 0
+          },
+          "prompt_tokens_details": {
+            "audio_tokens": 0,
+            "cached_tokens": 0,
+            "text_tokens": 130,
+            "image_tokens": 0
+          },
+          "input_tokens": 0,
+          "output_tokens": 0,
+          "input_tokens_details": null,
+          "claude_cache_creation_5_m_tokens": 0,
+          "claude_cache_creation_1_h_tokens": 0
+        }
+      },
+      "with_skill": {
+        "raw": "{\n  \"answer\": \"Construct the altitude from P to QR.\",\n  \"construction\": \"Draw segment PS from apex P perpendicular to base QR, with S on QR.\",\n  \"visual_marks\": [\n    \"PS\",\n    \"QS\",\n    \"SR\",\n    \"angle_PSQ\",\n    \"angle_PSR\"\n  ],\n  \"confidence\": \"0.99\",\n  \"evidence\": \"The diagram shows an isosceles triangle PQR with PQ=PR. The standard auxiliary construction is the altitude (or median) from the apex to the base, which divides the triangle into two congruent right triangles to prove base angle equality or find missing lengths.\"\n}",
+        "parsed": {
+          "answer": "Construct the altitude from P to QR.",
+          "construction": "Draw segment PS from apex P perpendicular to base QR, with S on QR.",
+          "visual_marks": [
+            "PS",
+            "QS",
+            "SR",
+            "angle_PSQ",
+            "angle_PSR"
+          ],
+          "confidence": "0.99",
+          "evidence": "The diagram shows an isosceles triangle PQR with PQ=PR. The standard auxiliary construction is the altitude (or median) from the apex to the base, which divides the triangle into two congruent right triangles to prove base angle equality or find missing lengths."
+        },
+        "usage": {
+          "completion_tokens": 1359,
+          "prompt_tokens": 3444,
+          "total_tokens": 4803,
+          "completion_tokens_details": {
+            "accepted_prediction_tokens": null,
+            "audio_tokens": 0,
+            "reasoning_tokens": 1211,
+            "rejected_prediction_tokens": null,
+            "text_tokens": 0
+          },
+          "prompt_tokens_details": {
+            "audio_tokens": 0,
+            "cached_tokens": 0,
+            "text_tokens": 1281,
+            "image_tokens": 0
+          },
+          "input_tokens": 0,
+          "output_tokens": 0,
+          "input_tokens_details": null,
+          "claude_cache_creation_5_m_tokens": 0,
+          "claude_cache_creation_1_h_tokens": 0
+        }
+      }
+    },
+    "different": {
+      "title": "Odd-one-out visual search",
+      "task_prompt": "Task: find the one shape-anomaly item in the grid. Ignore color accents or tinted backgrounds. Return compact JSON with keys answer, location, distinguishing_feature, confidence, and evidence. The candidate grid has 12 rows and 14 columns. Count rows from the top visible candidate row and columns from the leftmost visible candidate column, starting at 1.",
+      "expected": "The shape anomaly is row 8, column 12; it is missing the central dot.",
+      "task_images": [
+        "examples/task_execution_cases/assets/odd_one_out_hard_task.png"
+      ],
+      "skill_dir": "examples/curated_skills/open_source_homepage_regenerated/07_find_different",
+      "skill_images": [
+        "examples/curated_skills/open_source_homepage_regenerated/07_find_different/assets/incremental_comparison_protocol.png"
+      ],
+      "runtime_images": [
+        "examples/task_execution_cases/assets/odd_one_out_hard_task_runtime_overlay.png"
+      ],
+      "without_skill": {
+        "raw": "{\n  \"answer\": \"Row 11, Column 7\",\n  \"location\": [11, 7],\n  \"distinguishing_feature\": \"Diagonal line crosses through the entire circle\",\n  \"confidence\": \"100%\",\n  \"evidence\": \"The icon at row 11, column 7 has a diagonal line passing through the center of the circle, whereas all other icons have a short line segment protruding only from the top right edge.\"\n}",
+        "parsed": {
+          "answer": "Row 11, Column 7",
+          "location": [
+            11,
+            7
+          ],
+          "distinguishing_feature": "Diagonal line crosses through the entire circle",
+          "confidence": "100%",
+          "evidence": "The icon at row 11, column 7 has a diagonal line passing through the center of the circle, whereas all other icons have a short line segment protruding only from the top right edge."
+        },
+        "usage": {
+          "completion_tokens": 1686,
+          "prompt_tokens": 1211,
+          "total_tokens": 2897,
+          "completion_tokens_details": {
+            "accepted_prediction_tokens": null,
+            "audio_tokens": 0,
+            "reasoning_tokens": 1583,
+            "rejected_prediction_tokens": null,
+            "text_tokens": 0
+          },
+          "prompt_tokens_details": {
+            "audio_tokens": 0,
+            "cached_tokens": 0,
+            "text_tokens": 119,
+            "image_tokens": 0
+          },
+          "input_tokens": 0,
+          "output_tokens": 0,
+          "input_tokens_details": null,
+          "claude_cache_creation_5_m_tokens": 0,
+          "claude_cache_creation_1_h_tokens": 0
+        }
+      },
+      "with_skill": {
+        "raw": "```json\n{\"answer\": \"row 8, column 12\", \"location\": {\"row\": 8, \"column\": 12}, \"distinguishing_feature\": \"missing diagonal line\", \"confidence\": \"high\", \"evidence\": \"The icon at row 8, column 12 is missing the diagonal line extending from the top right of the circle that is present in all other icons.\"}\n```",
+        "parsed": {
+          "answer": "row 8, column 12",
+          "location": {
+            "row": 8,
+            "column": 12
+          },
+          "distinguishing_feature": "missing diagonal line",
+          "confidence": "high",
+          "evidence": "The icon at row 8, column 12 is missing the diagonal line extending from the top right of the circle that is present in all other icons."
+        },
+        "usage": {
+          "completion_tokens": 982,
+          "prompt_tokens": 3918,
+          "total_tokens": 4900,
+          "completion_tokens_details": {
+            "accepted_prediction_tokens": null,
+            "audio_tokens": 0,
+            "reasoning_tokens": 894,
+            "rejected_prediction_tokens": null,
+            "text_tokens": 0
+          },
+          "prompt_tokens_details": {
+            "audio_tokens": 0,
+            "cached_tokens": 0,
+            "text_tokens": 642,
+            "image_tokens": 0
+          },
+          "input_tokens": 0,
+          "output_tokens": 0,
+          "input_tokens_details": null,
+          "claude_cache_creation_5_m_tokens": 0,
+          "claude_cache_creation_1_h_tokens": 0
+        }
+      }
+    },
+    "video_proof": {
+      "title": "Pythagorean video proof",
+      "task_prompt": "Task: explain the visual proof of the Pythagorean theorem from these held-out ordered frames. Return compact JSON with keys answer, ordered_steps, frame_references, confidence, and evidence.",
+      "expected": "Each proof step should cite the held-out frame that supports it.",
+      "task_images": [
+        "examples/task_execution_cases/assets/pythagorean_heldout_1.png",
+        "examples/task_execution_cases/assets/pythagorean_heldout_2.png",
+        "examples/task_execution_cases/assets/pythagorean_heldout_3.png",
+        "examples/task_execution_cases/assets/pythagorean_heldout_4.png"
+      ],
+      "skill_dir": "examples/curated_skills/open_source_homepage_regenerated/09_pythagorean_visual_proof_video",
+      "skill_images": [],
+      "without_skill": {
+        "raw": "{\n  \"answer\": \"The visual proof demonstrates the Pythagorean theorem by showing that rearranging four identical right triangles within a constant outer square changes the configuration of the empty space from a single square of area c^2 to two smaller squares of areas a^2 and b^2, proving their total areas are equal.\",\n  \"ordered_steps\": [\n    \"Define a right triangle with legs a and b, and hypotenuse c.\",\n    \"Arrange four identical copies of this triangle inside a larger square, leaving a central empty square with area c^2.\",\n    \"Rearrange the same four triangles within the identical outer square, which regroups the empty space into two separate squares with areas a^2 and b^2.\",\n    \"Equate the conserved empty areas from both configurations to establish the formula a^2 + b^2 = c^2.\"\n  ],\n  \"frame_references\": {\n    \"step_1\": \"Frame 1\",\n    \"step_2\": \"Frame 2\",\n    \"step_3\": \"Frame 3\",\n    \"step_4\": \"Frame 4\"\n  },\n  \"confidence\": 0.99,\n  \"evidence\": \"Frame 1 introduces the base right triangle with labeled sides. Frame 2 shows the first arrangement where the empty space is a square labeled c^2. Frame 3 shows the rearranged empty space forming two squares labeled a^2 and b^2. Frame 4 concludes with the area equality equation.\"\n}",
+        "parsed": {
+          "answer": "The visual proof demonstrates the Pythagorean theorem by showing that rearranging four identical right triangles within a constant outer square changes the configuration of the empty space from a single square of area c^2 to two smaller squares of areas a^2 and b^2, proving their total areas are equal.",
+          "ordered_steps": [
+            "Define a right triangle with legs a and b, and hypotenuse c.",
+            "Arrange four identical copies of this triangle inside a larger square, leaving a central empty square with area c^2.",
+            "Rearrange the same four triangles within the identical outer square, which regroups the empty space into two separate squares with areas a^2 and b^2.",
+            "Equate the conserved empty areas from both configurations to establish the formula a^2 + b^2 = c^2."
+          ],
+          "frame_references": {
+            "step_1": "Frame 1",
+            "step_2": "Frame 2",
+            "step_3": "Frame 3",
+            "step_4": "Frame 4"
+          },
+          "confidence": 0.99,
+          "evidence": "Frame 1 introduces the base right triangle with labeled sides. Frame 2 shows the first arrangement where the empty space is a square labeled c^2. Frame 3 shows the rearranged empty space forming two squares labeled a^2 and b^2. Frame 4 concludes with the area equality equation."
+        },
+        "usage": {
+          "completion_tokens": 1734,
+          "prompt_tokens": 4516,
+          "total_tokens": 6250,
+          "completion_tokens_details": {
+            "accepted_prediction_tokens": null,
+            "audio_tokens": 0,
+            "reasoning_tokens": 1412,
+            "rejected_prediction_tokens": null,
+            "text_tokens": 0
+          },
+          "prompt_tokens_details": {
+            "audio_tokens": 0,
+            "cached_tokens": 0,
+            "text_tokens": 116,
+            "image_tokens": 0
+          },
+          "input_tokens": 0,
+          "output_tokens": 0,
+          "input_tokens_details": null,
+          "claude_cache_creation_5_m_tokens": 0,
+          "claude_cache_creation_1_h_tokens": 0
+        }
+      },
+      "with_skill": {
+        "raw": "{\n  \"answer\": \"The visual proof shows that rearranging four identical right triangles within a constant bounding square conserves the empty area, proving that the area of the hypotenuse squared (c^2) equals the sum of the areas of the legs squared (a^2 + b^2).\",\n  \"ordered_steps\": [\n    \"Identify the base right triangle with legs a, b, and hypotenuse c.\",\n    \"Observe four identical triangles arranged in a bounding square, leaving an empty inner square of area c^2.\",\n    \"Observe the same four triangles rearranged within the identical bounding square, leaving two empty squares of areas a^2 and b^2.\",\n    \"Conclude that because the total bounding area and the area of the four triangles remain constant, the remaining empty areas must be equal, yielding a^2 + b^2 = c^2.\"\n  ],\n  \"frame_references\": {\n    \"Step 1\": \"Frame 1 (right triangle definition)\",\n    \"Step 2\": \"Frame 2 (c^2 formation)\",\n    \"Step 3\": \"Frame 3 (a^2 and b^2 formation)\",\n    \"Step 4\": \"Frame 4 (area equality equation)\"\n  },\n  \"confidence\": \"High\",\n  \"evidence\": \"Frame 1 defines the triangle components. Frame 2 shows the empty space as c^2. Frame 3 shows the rearranged empty space as a^2 and b^2. Frame 4 concludes the equality based on area conservation.\"\n}",
+        "parsed": {
+          "answer": "The visual proof shows that rearranging four identical right triangles within a constant bounding square conserves the empty area, proving that the area of the hypotenuse squared (c^2) equals the sum of the areas of the legs squared (a^2 + b^2).",
+          "ordered_steps": [
+            "Identify the base right triangle with legs a, b, and hypotenuse c.",
+            "Observe four identical triangles arranged in a bounding square, leaving an empty inner square of area c^2.",
+            "Observe the same four triangles rearranged within the identical bounding square, leaving two empty squares of areas a^2 and b^2.",
+            "Conclude that because the total bounding area and the area of the four triangles remain constant, the remaining empty areas must be equal, yielding a^2 + b^2 = c^2."
+          ],
+          "frame_references": {
+            "Step 1": "Frame 1 (right triangle definition)",
+            "Step 2": "Frame 2 (c^2 formation)",
+            "Step 3": "Frame 3 (a^2 and b^2 formation)",
+            "Step 4": "Frame 4 (area equality equation)"
+          },
+          "confidence": "High",
+          "evidence": "Frame 1 defines the triangle components. Frame 2 shows the empty space as c^2. Frame 3 shows the rearranged empty space as a^2 and b^2. Frame 4 concludes the equality based on area conservation."
+        },
+        "usage": {
+          "completion_tokens": 1644,
+          "prompt_tokens": 6061,
+          "total_tokens": 7705,
+          "completion_tokens_details": {
+            "accepted_prediction_tokens": null,
+            "audio_tokens": 0,
+            "reasoning_tokens": 1310,
+            "rejected_prediction_tokens": null,
+            "text_tokens": 0
+          },
+          "prompt_tokens_details": {
+            "audio_tokens": 0,
+            "cached_tokens": 0,
+            "text_tokens": 1661,
+            "image_tokens": 0
+          },
+          "input_tokens": 0,
+          "output_tokens": 0,
+          "input_tokens_details": null,
+          "claude_cache_creation_5_m_tokens": 0,
+          "claude_cache_creation_1_h_tokens": 0
+        }
+      }
+    },
+    "url": {
+      "title": "VS Code Remote-SSH docs",
+      "task_prompt": "Task: produce the ordered Remote-SSH procedure shown by these held-out screenshots. Return compact JSON with keys answer, steps, screenshot_references, confidence, and evidence. Use no more than four short steps.",
+      "expected": "Procedure should bind each action to the held-out screenshot that shows it.",
+      "task_images": [
+        "examples/task_execution_cases/assets/remote_ssh_heldout_1.png",
+        "examples/task_execution_cases/assets/remote_ssh_heldout_2.png",
+        "examples/task_execution_cases/assets/remote_ssh_heldout_3.png",
+        "examples/task_execution_cases/assets/remote_ssh_heldout_4.png"
+      ],
+      "skill_dir": "examples/curated_skills/open_source_homepage_regenerated/08_vscode_remote_ssh_url",
+      "skill_images": [],
+      "without_skill": {
+        "raw": "{\n  \"answer\": \"To set up a Remote-SSH connection, follow the sequence of configuring the model, host, platform, and advanced settings.\",\n  \"steps\": [\n    \"Select the Local to Remote connection model.\",\n    \"Enter the SSH connection string in the Choose host field.\",\n    \"Select the target operating system under Select platform.\",\n    \"Set any required Advanced options, such as socket listening.\"\n  ],\n  \"screenshot_references\": [\n    \"Screenshot 1\",\n    \"Screenshot 2\",\n    \"Screenshot 3\",\n    \"Screenshot 4\"\n  ],\n  \"confidence\": 0.95,\n  \"evidence\": \"The images depict a step-by-step configuration UI: 1) Connection model, 2) Host input, 3) Platform selection, 4) Advanced options.\"\n}",
+        "parsed": {
+          "answer": "To set up a Remote-SSH connection, follow the sequence of configuring the model, host, platform, and advanced settings.",
+          "steps": [
+            "Select the Local to Remote connection model.",
+            "Enter the SSH connection string in the Choose host field.",
+            "Select the target operating system under Select platform.",
+            "Set any required Advanced options, such as socket listening."
+          ],
+          "screenshot_references": [
+            "Screenshot 1",
+            "Screenshot 2",
+            "Screenshot 3",
+            "Screenshot 4"
+          ],
+          "confidence": 0.95,
+          "evidence": "The images depict a step-by-step configuration UI: 1) Connection model, 2) Host input, 3) Platform selection, 4) Advanced options."
+        },
+        "usage": {
+          "completion_tokens": 1559,
+          "prompt_tokens": 4446,
+          "total_tokens": 6005,
+          "completion_tokens_details": {
+            "accepted_prediction_tokens": null,
+            "audio_tokens": 0,
+            "reasoning_tokens": 1373,
+            "rejected_prediction_tokens": null,
+            "text_tokens": 0
+          },
+          "prompt_tokens_details": {
+            "audio_tokens": 0,
+            "cached_tokens": 0,
+            "text_tokens": 122,
+            "image_tokens": 0
+          },
+          "input_tokens": 0,
+          "output_tokens": 0,
+          "input_tokens_details": null,
+          "claude_cache_creation_5_m_tokens": 0,
+          "claude_cache_creation_1_h_tokens": 0
+        }
+      },
+      "with_skill": {
+        "raw": "{\n  \"answer\": \"Remote-SSH connection procedure\",\n  \"steps\": [\n    \"Review the local to remote connection model.\",\n    \"Enter or choose the SSH host destination.\",\n    \"Select the remote platform operating system.\",\n    \"Configure advanced options if needed.\"\n  ],\n  \"screenshot_references\": [\n    \"Image 1: Connection model\",\n    \"Image 2: Choose host\",\n    \"Image 3: Select platform\",\n    \"Image 4: Advanced option\"\n  ],\n  \"confidence\": \"high\",\n  \"evidence\": \"Images sequentially display the connection model, host entry prompt, platform selection dialog, and advanced settings.\"\n}",
+        "parsed": {
+          "answer": "Remote-SSH connection procedure",
+          "steps": [
+            "Review the local to remote connection model.",
+            "Enter or choose the SSH host destination.",
+            "Select the remote platform operating system.",
+            "Configure advanced options if needed."
+          ],
+          "screenshot_references": [
+            "Image 1: Connection model",
+            "Image 2: Choose host",
+            "Image 3: Select platform",
+            "Image 4: Advanced option"
+          ],
+          "confidence": "high",
+          "evidence": "Images sequentially display the connection model, host entry prompt, platform selection dialog, and advanced settings."
+        },
+        "usage": {
+          "completion_tokens": 1108,
+          "prompt_tokens": 6614,
+          "total_tokens": 7722,
+          "completion_tokens_details": {
+            "accepted_prediction_tokens": null,
+            "audio_tokens": 0,
+            "reasoning_tokens": 959,
+            "rejected_prediction_tokens": null,
+            "text_tokens": 0
+          },
+          "prompt_tokens_details": {
+            "audio_tokens": 0,
+            "cached_tokens": 0,
+            "text_tokens": 2290,
+            "image_tokens": 0
+          },
+          "input_tokens": 0,
+          "output_tokens": 0,
+          "input_tokens_details": null,
+          "claude_cache_creation_5_m_tokens": 0,
+          "claude_cache_creation_1_h_tokens": 0
+        }
+      }
+    }
+  }
+}

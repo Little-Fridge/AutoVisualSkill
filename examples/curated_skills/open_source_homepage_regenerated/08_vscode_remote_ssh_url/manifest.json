@@ -1,0 +1,228 @@
+{
+  "skill_name": "vscode_remote_ssh_interleaved_skill",
+  "skill_type": "visual",
+  "visual_skill_kind": "interleaved",
+  "prior_kind": "static",
+  "bottleneck": "protocol_ambiguity",
+  "visual_prior_specs": [
+    {
+      "name": "remote_ssh_connection_model",
+      "prior_kind": "static",
+      "strategy": "source",
+      "content_description": "Documentation diagram showing the local VS Code client, SSH tunnel, remote VS Code Server, remote extensions, and resources on the remote machine.",
+      "source_frame_index": 0,
+      "crop_region_description": "",
+      "search_query": "",
+      "draw_instructions": "",
+      "visual_rationale": "This source image efficiently communicates the spatial relationship between local UI/extensions and remote server/workspace execution, which is harder to convey tersely in prose.",
+      "visual_encodings": [
+        "Left block = local machine context",
+        "Center arrow/tunnel = SSH connection path",
+        "Right block = remote machine context",
+        "Orange extension blocks distinguish extension placement",
+        "Green blocks/cylinder indicate remote resources and processes"
+      ],
+      "text_exclusions": [
+        "Prerequisite versions and installation steps",
+        "Security notes and authentication details",
+        "Exact command names and menu paths"
+      ],
+      "forbidden_elements": [
+        "Redrawn annotations over the source image",
+        "Long captions embedded inside the image",
+        "Benchmark-specific coordinates or click targets",
+        "Additional logos or branding beyond the source frame"
+      ],
+      "max_text_tokens": 12,
+      "image_generation_prompt": "",
+      "image_generation_model": "",
+      "image_generation_size": "1024x1024",
+      "renderer_name": "",
+      "renderer_description": "",
+      "renderer_inputs": [],
+      "renderer_outputs": []
+    },
+    {
+      "name": "ssh_host_entry_prompt",
+      "prior_kind": "static",
+      "strategy": "source",
+      "content_description": "Documentation screenshot of the VS Code prompt for selecting a configured SSH host or entering a user@host string.",
+      "source_frame_index": 2,
+      "crop_region_description": "",
+      "search_query": "",
+      "draw_instructions": "",
+      "visual_rationale": "This source image clarifies the exact prompt style, input slot, and selection affordance for entering or choosing an SSH host, which is a GUI convention prone to ambiguity.",
+      "visual_encodings": [
+        "Top field = host entry input",
+        "Highlighted list item = selectable host result",
+        "Secondary option = SSH host configuration path"
+      ],
+      "text_exclusions": [
+        "What hostname to use in the user's own environment",
+        "How SSH keys are provisioned",
+        "Any prose explanation of when to choose enter versus select"
+      ],
+      "forbidden_elements": [
+        "Overlayed full-sentence instructions",
+        "Synthetic hostnames presented as actual user values",
+        "Extra arrows or highlights not present in source unless explicitly added outside the reused image"
+      ],
+      "max_text_tokens": 12,
+      "image_generation_prompt": "",
+      "image_generation_model": "",
+      "image_generation_size": "1024x1024",
+      "renderer_name": "",
+      "renderer_description": "",
+      "renderer_inputs": [],
+      "renderer_outputs": []
+    },
+    {
+      "name": "remote_platform_selection_dialog",
+      "prior_kind": "static",
+      "strategy": "source",
+      "content_description": "Documentation screenshot of the VS Code dialog asking for the remote host platform, with Linux, Windows, and macOS options.",
+      "source_frame_index": 3,
+      "crop_region_description": "",
+      "search_query": "",
+      "draw_instructions": "",
+      "visual_rationale": "This source image resolves the UI ambiguity of the remote OS selection step by showing the actual dialog layout and available platform choices.",
+      "visual_encodings": [
+        "Dialog title = remote host platform prompt",
+        "List rows = available platform options",
+        "Highlighted row = current selection example"
+      ],
+      "text_exclusions": [
+        "How to determine the user's server OS",
+        "Consequences of choosing the wrong OS",
+        "Follow-up troubleshooting text"
+      ],
+      "forbidden_elements": [
+        "Answer-like instruction embedded in image",
+        "New legends or heavy prose",
+        "Task-instance specific server names framed as required values"
+      ],
+      "max_text_tokens": 12,
+      "image_generation_prompt": "",
+      "image_generation_model": "",
+      "image_generation_size": "1024x1024",
+      "renderer_name": "",
+      "renderer_description": "",
+      "renderer_inputs": [],
+      "renderer_outputs": []
+    },
+    {
+      "name": "remote_ssh_setting_example",
+      "prior_kind": "static",
+      "strategy": "source",
+      "content_description": "Documentation screenshot of a Remote.SSH setting entry in VS Code settings, illustrating where an advanced SSH-related option appears.",
+      "source_frame_index": 1,
+      "crop_region_description": "",
+      "search_query": "",
+      "draw_instructions": "",
+      "visual_rationale": "This source image helps users recognize the settings UI location and formatting for Remote.SSH options, which prose alone may not anchor clearly.",
+      "visual_encodings": [
+        "Setting title row = identifiable settings entry",
+        "Checkbox/control area = option toggle location",
+        "Description text block = advanced setting context"
+      ],
+      "text_exclusions": [
+        "Whether the setting should be enabled for a specific environment",
+        "Compatibility caveats and server requirements",
+        "Primary connection flow steps"
+      ],
+      "forbidden_elements": [
+        "Claiming this setting is always required",
+        "Overlaid instructions inside the screenshot",
+        "Any environment-specific values or paths"
+      ],
+      "max_text_tokens": 12,
+      "image_generation_prompt": "",
+      "image_generation_model": "",
+      "image_generation_size": "1024x1024",
+      "renderer_name": "",
+      "renderer_description": "",
+      "renderer_inputs": [],
+      "renderer_outputs": []
+    }
+  ],
+  "binding_protocol": {
+    "image_roles": [
+      "Conceptual model image for explaining local-versus-remote behavior before action steps",
+      "UI prompt image for the SSH host entry/selection step",
+      "UI dialog image for the remote platform selection step",
+      "Settings screenshot for optional advanced configuration reference"
+    ],
+    "coordinate_system": "Source-frame indexing only; each reused image is referenced by its source_frame_index and bound to a prose step, not by screen coordinates.",
+    "text_to_visual_binding": [
+      "When text explains where code, terminals, and extensions run, reference remote_ssh_connection_model.",
+      "When text instructs the user to choose or type an SSH destination, reference ssh_host_entry_prompt.",
+      "When text instructs the user to identify the remote OS, reference remote_platform_selection_dialog.",
+      "When text mentions optional Remote.SSH settings, reference remote_ssh_setting_example.",
+      "In operational guidance, each reused image should be referenced only when it clarifies the current step or next action."
+    ],
+    "task_binding_rules": [
+      "Bind images only to the procedural steps they directly support; do not include unrelated extracted frames.",
+      "Treat all literal hostnames, machine names, and highlighted selections in source images as examples, not as mandatory inputs.",
+      "Keep the workflow structure ordered: prerequisites -> install/open Remote-SSH -> enter/select host -> choose platform if prompted -> open remote folder/workspace -> optional settings/troubleshooting context.",
+      "If a step has no useful extracted image, keep that step as text guidance rather than inventing a new visual reference."
+    ],
+    "anti_leakage_rules": [
+      "Do not output private file paths, benchmark coordinates, or synthetic click locations.",
+      "Do not fabricate unseen UI elements beyond what the source frames show.",
+      "Do not convert example hostnames from the screenshots into user-specific answers.",
+      "Do not embed long instructional prose into image assets; keep explanations in text."
+    ]
+  },
+  "runtime_protocol": {
+    "mode": "single_turn",
+    "state_schema": "{stage:string,current_ui_evidence:string,completed_steps:string[],next_action:string,needs_user_input:boolean,missing_input:string|null,done:boolean}",
+    "update_rule": "Inspect the current user context or GUI state, infer the Remote-SSH stage, bind the relevant source image to that stage, and advance one concrete action at a time.",
+    "stop_condition": "Stop when VS Code is connected to the remote host and the user can open or edit a remote folder/workspace, or when missing user input blocks progress.",
+    "renderer_spec": ""
+  },
+  "usage_constraints": [
+    "Reuse source documentation images instead of generating new priors because the extracted frames already contain relevant UI examples.",
+    "This skill is for operational Remote-SSH guidance, not for solving environment-specific SSH authentication problems.",
+    "Avoid introducing unsupported UI paths that are not reflected in the provided material summary or source frames.",
+    "Keep images as step-bound visual references and prose as the carrier of actionable instructions.",
+    "Do not include benchmark answers, coordinates, or hidden environment details."
+  ],
+  "assets": [
+    {
+      "filename": "remote_ssh_connection_model.png",
+      "prior_name": "remote_ssh_connection_model",
+      "prior_kind": "static",
+      "strategy": "source",
+      "description": "Documentation diagram showing the local VS Code client, SSH tunnel, remote VS Code Server, remote extensions, and resources on the remote machine.",
+      "width": 968,
+      "height": 314
+    },
+    {
+      "filename": "ssh_host_entry_prompt.png",
+      "prior_name": "ssh_host_entry_prompt",
+      "prior_kind": "static",
+      "strategy": "source",
+      "description": "Documentation screenshot of the VS Code prompt for selecting a configured SSH host or entering a user@host string.",
+      "width": 1192,
+      "height": 222
+    },
+    {
+      "filename": "remote_platform_selection_dialog.png",
+      "prior_name": "remote_platform_selection_dialog",
+      "prior_kind": "static",
+      "strategy": "source",
+      "description": "Documentation screenshot of the VS Code dialog asking for the remote host platform, with Linux, Windows, and macOS options.",
+      "width": 1198,
+      "height": 210
+    },
+    {
+      "filename": "remote_ssh_setting_example.png",
+      "prior_name": "remote_ssh_setting_example",
+      "prior_kind": "static",
+      "strategy": "source",
+      "description": "Documentation screenshot of a Remote.SSH setting entry in VS Code settings, illustrating where an advanced SSH-related option appears.",
+      "width": 759,
+      "height": 120
+    }
+  ]
+}

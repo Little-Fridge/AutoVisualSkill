@@ -1,0 +1,14 @@
+langgraph>=0.2.60
+langchain-core>=0.3.0
+langchain-openai>=0.2.0
+openai>=1.60.0
+pydantic>=2.8.0
+Pillow>=10.4.0
+imageio>=2.35.0
+imageio-ffmpeg>=0.5.1
+opencv-python-headless>=4.9.0
+requests>=2.32.0
+beautifulsoup4>=4.12.0
+tavily-python>=0.5.0
+PyMuPDF>=1.24.0
+gradio>=5.0.0

@@ -1,0 +1,165 @@
+{
+  "skill_name": "mira_slide_critique_style",
+  "skill_type": "visual",
+  "visual_skill_kind": "interleaved",
+  "prior_kind": "static",
+  "bottleneck": "protocol_ambiguity",
+  "visual_prior_specs": [
+    {
+      "name": "annotated_anti_patterns",
+      "prior_kind": "static",
+      "strategy": "source",
+      "content_description": "An annotated slide highlighting common 'AI-look' design flaws using colored bounding boxes and short labels.",
+      "source_frame_index": 2,
+      "crop_region_description": "",
+      "search_query": "",
+      "draw_instructions": "",
+      "visual_rationale": "Demonstrates the exact spatial footprint and visual weight of the anti-patterns (banners, fragmented boxes, footer noise) that text alone cannot adequately convey.",
+      "visual_encodings": [
+        "Red outline (top) = Excessive banner weight",
+        "Blue outline (left) = Fragmented boxes fighting reading order",
+        "Red outline (right) = Generic diagram acting as decoration rather than evidence",
+        "Cyan outline (bottom) = Footer noise"
+      ],
+      "text_exclusions": [
+        "The specific text content of the slide (e.g., 'Q3 Growth Automation')",
+        "The step-by-step critique process"
+      ],
+      "forbidden_elements": [
+        "Long explanatory paragraphs",
+        "Redundant legends"
+      ],
+      "max_text_tokens": 15,
+      "image_generation_prompt": "",
+      "image_generation_model": "",
+      "image_generation_size": "1024x1024",
+      "renderer_name": "",
+      "renderer_description": "",
+      "renderer_inputs": [],
+      "renderer_outputs": []
+    },
+    {
+      "name": "hierarchy_comparison",
+      "prior_kind": "static",
+      "strategy": "source",
+      "content_description": "A side-by-side comparison of a rejected card-based layout and an approved whitespace-driven layout.",
+      "source_frame_index": 3,
+      "crop_region_description": "",
+      "search_query": "",
+      "draw_instructions": "",
+      "visual_rationale": "Shows the structural transformation from a cluttered, box-heavy layout to a clean, hierarchy-driven layout using whitespace.",
+      "visual_encodings": [
+        "Left panel (rejected) = High density of bounding boxes and background fills",
+        "Right panel (approved) = High proportion of whitespace, clear left-aligned typography, absence of container boxes"
+      ],
+      "text_exclusions": [
+        "The rationale for why whitespace is better (belongs in declarative logic)"
+      ],
+      "forbidden_elements": [
+        "Detailed text content within the mock slides"
+      ],
+      "max_text_tokens": 10,
+      "image_generation_prompt": "",
+      "image_generation_model": "",
+      "image_generation_size": "1024x1024",
+      "renderer_name": "",
+      "renderer_description": "",
+      "renderer_inputs": [],
+      "renderer_outputs": []
+    },
+    {
+      "name": "visual_snippets",
+      "prior_kind": "static",
+      "strategy": "source",
+      "content_description": "A collection of preferred visual habits, including a color palette, a typography lockup, and a minimalist diagram style.",
+      "source_frame_index": 4,
+      "crop_region_description": "",
+      "search_query": "",
+      "draw_instructions": "",
+      "visual_rationale": "Provides concrete visual reference for the preferred aesthetic, including exact color hues, line weights, and spatial relationships in the typography lockup.",
+      "visual_encodings": [
+        "Top row = Approved color palette swatches",
+        "Bottom left = Spatial relationship of 'Claim title' to 'short evidence line'",
+        "Bottom center = Minimalist line chart style with circular data points",
+        "Bottom right = Abstract wireframe showing preferred structural alignment"
+      ],
+      "text_exclusions": [
+        "The instruction to use these as habits rather than rigid templates"
+      ],
+      "forbidden_elements": [
+        "Extraneous UI elements",
+        "Complex charts"
+      ],
+      "max_text_tokens": 10,
+      "image_generation_prompt": "",
+      "image_generation_model": "",
+      "image_generation_size": "1024x1024",
+      "renderer_name": "",
+      "renderer_description": "",
+      "renderer_inputs": [],
+      "renderer_outputs": []
+    }
+  ],
+  "binding_protocol": {
+    "image_roles": [
+      "anti_pattern_reference",
+      "hierarchy_comparison",
+      "style_snippets"
+    ],
+    "coordinate_system": "relative_spatial_layout",
+    "text_to_visual_binding": [
+      "Bind the concept of 'banner weight' to the top red bounding box in the anti_pattern_reference.",
+      "Bind the concept of 'whitespace-driven hierarchy' to the right side of the hierarchy_comparison.",
+      "Bind the 'Claim title' typography rule to the bottom-left lockup in the style_snippets.",
+      "Bind the 'evidence diagram' rule to the bottom-center line chart in the style_snippets."
+    ],
+    "task_binding_rules": [
+      "When reviewing a target slide, compare its layout to the anti_pattern_reference to detect similar structural flaws.",
+      "When suggesting redesigns, apply the spatial habits and color palette from style_snippets."
+    ],
+    "anti_leakage_rules": [
+      "Do not infer or mention personal attributes; focus strictly on the visual design rules extracted from the chat evidence.",
+      "Do not treat the snippets as a rigid, unchangeable template; apply them as recurring spatial habits adaptable to new content."
+    ]
+  },
+  "runtime_protocol": {
+    "mode": "single_turn",
+    "state_schema": "",
+    "update_rule": "",
+    "stop_condition": "",
+    "renderer_spec": ""
+  },
+  "usage_constraints": [
+    "The skill must evaluate visual structure and hierarchy, not just text copy.",
+    "Critiques must prioritize structural changes (whitespace, removing boxes) over mere decorative changes."
+  ],
+  "assets": [
+    {
+      "filename": "annotated_anti_patterns.png",
+      "prior_name": "annotated_anti_patterns",
+      "prior_kind": "static",
+      "strategy": "source",
+      "description": "An annotated slide highlighting common 'AI-look' design flaws using colored bounding boxes and short labels.",
+      "width": 1200,
+      "height": 675
+    },
+    {
+      "filename": "hierarchy_comparison.png",
+      "prior_name": "hierarchy_comparison",
+      "prior_kind": "static",
+      "strategy": "source",
+      "description": "A side-by-side comparison of a rejected card-based layout and an approved whitespace-driven layout.",
+      "width": 1200,
+      "height": 560
+    },
+    {
+      "filename": "visual_snippets.png",
+      "prior_name": "visual_snippets",
+      "prior_kind": "static",
+      "strategy": "source",
+      "description": "A collection of preferred visual habits, including a color palette, a typography lockup, and a minimalist diagram style.",
+      "width": 1200,
+      "height": 675
+    }
+  ]
+}

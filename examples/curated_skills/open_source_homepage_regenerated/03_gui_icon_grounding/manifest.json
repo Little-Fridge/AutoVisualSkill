@@ -1,0 +1,82 @@
+{
+  "skill_name": "click_search_button_toolbar",
+  "skill_type": "visual",
+  "visual_skill_kind": "static",
+  "prior_kind": "static",
+  "bottleneck": "protocol_ambiguity",
+  "visual_prior_specs": [
+    {
+      "name": "search_button_hitbox_overlay",
+      "prior_kind": "static",
+      "strategy": "overlay",
+      "content_description": "The provided toolbar screenshot with a bounding box overlay marking the search button's clickable area and a point marking the optimal click center.",
+      "source_frame_index": 0,
+      "crop_region_description": "",
+      "search_query": "",
+      "draw_instructions": "Draw a green rectangular bounding box around the second icon from the left (the magnifying glass), matching the rounded square outline of the button. Draw a red dot exactly in the center of this green bounding box.",
+      "visual_rationale": "Demonstrates the exact spatial extent of the clickable hitbox relative to the icon graphic, and the optimal center point for a click action, which prose cannot convey precisely.",
+      "visual_encodings": [
+        "Green rectangle = clickable hitbox envelope",
+        "Red dot = optimal click center"
+      ],
+      "text_exclusions": [
+        "Do not add text labels like 'Search' or 'Click Here'",
+        "Do not write coordinates on the image"
+      ],
+      "forbidden_elements": [
+        "Text labels",
+        "Arrows",
+        "Coordinates",
+        "Extra UI elements not in the source image"
+      ],
+      "max_text_tokens": 0,
+      "image_generation_prompt": "",
+      "image_generation_model": "",
+      "image_generation_size": "1024x1024",
+      "renderer_name": "",
+      "renderer_description": "",
+      "renderer_inputs": [],
+      "renderer_outputs": []
+    }
+  ],
+  "binding_protocol": {
+    "image_roles": [
+      "reference_overlay"
+    ],
+    "coordinate_system": "normalized_xy",
+    "text_to_visual_binding": [
+      "The 'search button' in text refers to the icon enclosed by the green rectangle in the reference overlay.",
+      "The 'click center' refers to the red dot."
+    ],
+    "task_binding_rules": [
+      "Locate the magnifying glass icon in the target UI.",
+      "Estimate the bounding box matching the green rectangle's proportions.",
+      "Output the coordinates corresponding to the red dot's relative position."
+    ],
+    "anti_leakage_rules": [
+      "Do not output the exact coordinates from the reference image; calculate them for the target image."
+    ]
+  },
+  "runtime_protocol": {
+    "mode": "single_turn",
+    "state_schema": "",
+    "update_rule": "",
+    "stop_condition": "",
+    "renderer_spec": ""
+  },
+  "usage_constraints": [
+    "The target image must contain a visible toolbar with a magnifying glass icon.",
+    "Assumes standard horizontal toolbar layout."
+  ],
+  "assets": [
+    {
+      "filename": "search_button_hitbox_overlay.png",
+      "prior_name": "search_button_hitbox_overlay",
+      "prior_kind": "static",
+      "strategy": "overlay",
+      "description": "The provided toolbar screenshot with a bounding box overlay marking the search button's clickable area and a point marking the optimal click center.",
+      "width": 900,
+      "height": 420
+    }
+  ]
+}

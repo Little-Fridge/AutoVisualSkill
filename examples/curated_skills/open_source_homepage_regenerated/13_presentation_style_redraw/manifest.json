@@ -1,0 +1,202 @@
+{
+  "skill_name": "presentation_design_critique_redraw",
+  "skill_type": "visual",
+  "visual_skill_kind": "dynamic",
+  "prior_kind": "dynamic",
+  "bottleneck": "mixed",
+  "visual_prior_specs": [
+    {
+      "name": "presentation_design_critique_overlay",
+      "prior_kind": "dynamic",
+      "strategy": "renderer",
+      "content_description": "A runtime overlay protocol for slide-making agents that marks visual design issues directly on a draft slide before guiding a cleaner redraw.",
+      "source_frame_index": -1,
+      "crop_region_description": "",
+      "search_query": "",
+      "draw_instructions": "",
+      "visual_rationale": "Slide quality depends on spatial hierarchy, spacing, grouping, reading order, and decoration level. Rendering critique directly onto the slide makes these visual constraints actionable for a redraw agent in a way text-only rules do not reliably preserve.",
+      "visual_encodings": [
+        "Red outline = structural issue such as clutter, equal-weight cards, or unclear reading order.",
+        "Amber outline = hierarchy or evidence issue.",
+        "Purple outline = generic decorative AI styling.",
+        "Green guidance box = redraw instruction for the next pass.",
+        "Final redraw image = same content with clearer hierarchy and restrained style."
+      ],
+      "text_exclusions": [
+        "Business strategy and content edits stay in Markdown text.",
+        "Long design critique prose stays outside the overlay.",
+        "Subjective taste claims must be framed as style-specific guidance."
+      ],
+      "forbidden_elements": [
+        "Private slide content",
+        "Brand assets copied from external decks",
+        "Opaque marks that hide slide evidence",
+        "Unsupported content changes",
+        "Universal claims about good design"
+      ],
+      "max_text_tokens": 16,
+      "image_generation_prompt": "",
+      "image_generation_model": "",
+      "image_generation_size": "1024x1024",
+      "renderer_name": "presentation_design_critique_overlay",
+      "renderer_description": "Render compact critique regions and redraw guidance onto the draft slide image, then use the overlay state to produce a cleaner slide redraw.",
+      "renderer_inputs": [
+        "draft slide image",
+        "slide goal and content constraints",
+        "optional style reference board",
+        "critique region list",
+        "visual style configuration"
+      ],
+      "renderer_outputs": [
+        "critique overlay image",
+        "optional machine-readable design critique manifest",
+        "redraw guidance for the slide generation agent"
+      ]
+    }
+  ],
+  "binding_protocol": {
+    "image_roles": [
+      "Draft slide image produced by a first-pass or text-only agent.",
+      "Dynamic critique overlay rendered onto the draft slide.",
+      "Style reference board with reusable visual constraints.",
+      "Final redraw image preserving the same slide content."
+    ],
+    "coordinate_system": "Use slide pixel coordinates for critique bounding boxes; redraw output may use slide layout regions rather than exact copied coordinates.",
+    "text_to_visual_binding": [
+      "Red critique regions bind to structural layout problems.",
+      "Amber critique regions bind to weak hierarchy or missing evidence signals.",
+      "Purple critique regions bind to decorative AI-style elements.",
+      "Green guidance region binds to the next redraw instruction.",
+      "Style board binds text guidance to visual examples of hierarchy, spacing, and palette."
+    ],
+    "task_binding_rules": [
+      "Preserve the user's required slide content and message.",
+      "Inspect visual composition before writing redesign instructions.",
+      "Render critique marks on the draft slide before redrawing.",
+      "Use the latest critique overlay as visual working memory for the redraw.",
+      "Evaluate the redraw against the marked issues rather than against generic taste words."
+    ],
+    "anti_leakage_rules": [
+      "Do not copy synthetic slide metrics or topic into user-specific outputs.",
+      "Do not import external brand systems or copyrighted deck layouts.",
+      "Do not hide the draft slide under large opaque critique marks.",
+      "Do not remove required content while improving visual hierarchy."
+    ]
+  },
+  "runtime_protocol": {
+    "mode": "iterative_loop",
+    "state_schema": "{\"round_index\": <int>, \"draft_slide_path\": <string>, \"critique_regions\": [{\"id\": <string>, \"bbox\": [<number>, <number>, <number>, <number>], \"issue_type\": \"weak_focal_point|clutter|generic_decoration|spacing|reading_order|icon_language\", \"severity\": \"low|medium|high\", \"redraw_instruction\": <string>}], \"style_targets\": [<string>], \"redraw_status\": \"needs_redraw|improved|blocked\"}",
+    "update_rule": "At each round, inspect the current slide image, render critique marks for the most important visual issues, convert marks into redraw instructions, and generate or request a revised slide that addresses the visible critique.",
+    "stop_condition": "Stop when the redraw preserves the required content and resolves the high-severity critique regions, or when max_rounds or missing content blocks progress.",
+    "renderer_spec": "Renderer draws translucent critique boxes and compact labels directly on the draft slide. It must keep the slide readable, avoid long prose labels, and produce redraw guidance linked to each marked region."
+  },
+  "usage_constraints": [
+    "This showcase demonstrates one professional PPT style, not universal design taste.",
+    "At runtime, render critique marks onto the user's draft slide before redrawing.",
+    "Do not invent unsupported slide content or metrics.",
+    "Do not copy synthetic content, coordinates, or layout as user-specific output.",
+    "Keep critique labels compact and preserve the draft image evidence.",
+    "For public-source examples, keep source attribution visible and avoid endorsement claims."
+  ],
+  "assets": [
+    {
+      "filename": "text_only_slide_draft.png",
+      "prior_name": "text_only_slide_draft",
+      "prior_kind": "static",
+      "strategy": "draw",
+      "description": "Synthetic first-pass slide with generic AI-deck styling, heavy gradients, many equal-weight cards, and weak hierarchy.",
+      "width": 1600,
+      "height": 900
+    },
+    {
+      "filename": "design_critique_overlay.png",
+      "prior_name": "design_critique_overlay_preview",
+      "prior_kind": "static",
+      "strategy": "draw",
+      "description": "Static preview of runtime critique overlay semantics for slide design issues.",
+      "width": 1600,
+      "height": 900
+    },
+    {
+      "filename": "visual_skill_assisted_slide.png",
+      "prior_name": "visual_skill_assisted_slide",
+      "prior_kind": "static",
+      "strategy": "draw",
+      "description": "Cleaner synthetic redraw preserving the same slide content with clearer hierarchy and restrained visual style.",
+      "width": 1600,
+      "height": 900
+    },
+    {
+      "filename": "slide_redraw_runtime_trace.png",
+      "prior_name": "slide_redraw_runtime_trace_preview",
+      "prior_kind": "static",
+      "strategy": "source",
+      "description": "Three-step real PPT application trace: input slide, red runtime critique overlay with region-linked redraw actions, and skill-assisted redraw.",
+      "width": 2880,
+      "height": 1080
+    },
+    {
+      "filename": "heldout_text_only_redraw.png",
+      "prior_name": "heldout_text_only_redraw",
+      "prior_kind": "static",
+      "strategy": "draw",
+      "description": "Rendered repair from the text-only Gemini redesign plan on the held-out slide task.",
+      "width": 1280,
+      "height": 720
+    },
+    {
+      "filename": "heldout_visual_skill_redraw.png",
+      "prior_name": "heldout_visual_skill_redraw",
+      "prior_kind": "static",
+      "strategy": "draw",
+      "description": "Rendered repair from the Gemini visual-skill run after applying region-marked critique to the held-out slide task.",
+      "width": 1280,
+      "height": 720
+    },
+    {
+      "filename": "style_reference_board.png",
+      "prior_name": "style_reference_board",
+      "prior_kind": "static",
+      "strategy": "draw",
+      "description": "Compact reference board showing reusable hierarchy, spacing, and palette constraints for the demonstrated slide style.",
+      "width": 1400,
+      "height": 760
+    },
+    {
+      "filename": "real_ppt_nasa_albedo_input.png",
+      "prior_name": "real_ppt_nasa_albedo_input",
+      "prior_kind": "static",
+      "strategy": "source",
+      "description": "Rendered public NASA HEAT teaching slide used as a real PPT application input.",
+      "width": 1439,
+      "height": 810
+    },
+    {
+      "filename": "real_ppt_nasa_critique_overlay.png",
+      "prior_name": "real_ppt_nasa_critique_overlay",
+      "prior_kind": "static",
+      "strategy": "source",
+      "description": "Runtime critique overlay produced by applying the dynamic slide critique protocol to the real input slide.",
+      "width": 1439,
+      "height": 810
+    },
+    {
+      "filename": "real_ppt_nasa_skill_redraw.png",
+      "prior_name": "real_ppt_nasa_skill_redraw",
+      "prior_kind": "static",
+      "strategy": "draw",
+      "description": "Polished skill-assisted redraw preserving the scientific content from the real NASA HEAT slide.",
+      "width": 1920,
+      "height": 1080
+    },
+    {
+      "filename": "real_ppt_nasa_skill_trace.png",
+      "prior_name": "real_ppt_nasa_skill_trace",
+      "prior_kind": "static",
+      "strategy": "source",
+      "description": "Three-step real PPT application trace: input slide, runtime critique overlay with region-linked redraw actions, and skill-assisted redraw.",
+      "width": 2880,
+      "height": 1080
+    }
+  ]
+}

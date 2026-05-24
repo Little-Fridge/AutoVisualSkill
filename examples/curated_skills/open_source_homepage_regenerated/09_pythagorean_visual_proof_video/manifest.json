@@ -1,0 +1,206 @@
+{
+  "skill_name": "pythagorean_visual_proof_reasoning",
+  "skill_type": "visual",
+  "visual_skill_kind": "interleaved",
+  "prior_kind": "static",
+  "bottleneck": "protocol_ambiguity",
+  "visual_prior_specs": [
+    {
+      "name": "base_triangle_definition",
+      "prior_kind": "static",
+      "strategy": "source",
+      "content_description": "A right triangle with color-coded sides: A (magenta), B (green), and C (cyan).",
+      "source_frame_index": 0,
+      "crop_region_description": "",
+      "search_query": "",
+      "draw_instructions": "",
+      "visual_rationale": "Establishes the visual-to-algebraic mapping by binding specific colors and spatial orientations to the variables A, B, and C.",
+      "visual_encodings": [
+        "Magenta line = Leg A",
+        "Green line = Leg B",
+        "Cyan line = Hypotenuse C"
+      ],
+      "text_exclusions": [
+        "The definition of a right angle",
+        "The algebraic formula itself"
+      ],
+      "forbidden_elements": [
+        "Extraneous text",
+        "Grid lines"
+      ],
+      "max_text_tokens": 10,
+      "image_generation_prompt": "",
+      "image_generation_model": "",
+      "image_generation_size": "1024x1024",
+      "renderer_name": "",
+      "renderer_description": "",
+      "renderer_inputs": [],
+      "renderer_outputs": []
+    },
+    {
+      "name": "c_squared_formation",
+      "prior_kind": "static",
+      "strategy": "source",
+      "content_description": "Four identical right triangles arranged to form an outer square, with their hypotenuses forming an inner tilted square labeled C^2.",
+      "source_frame_index": 2,
+      "crop_region_description": "",
+      "search_query": "",
+      "draw_instructions": "",
+      "visual_rationale": "Demonstrates the spatial composition of the first area state, showing how the hypotenuses enclose the C^2 area within the (A+B) bounding box.",
+      "visual_encodings": [
+        "Outer boundary = Square of side (A+B)",
+        "Inner cyan boundary = Square of area C^2",
+        "Four colored triangles = Conserved area components"
+      ],
+      "text_exclusions": [
+        "The mathematical expansion of (A+B)^2"
+      ],
+      "forbidden_elements": [
+        "Equations",
+        "Step-by-step animation trails"
+      ],
+      "max_text_tokens": 5,
+      "image_generation_prompt": "",
+      "image_generation_model": "",
+      "image_generation_size": "1024x1024",
+      "renderer_name": "",
+      "renderer_description": "",
+      "renderer_inputs": [],
+      "renderer_outputs": []
+    },
+    {
+      "name": "a_b_squared_formation",
+      "prior_kind": "static",
+      "strategy": "source",
+      "content_description": "The same four right triangles rearranged into two rectangles within an identical outer square, leaving two empty square spaces labeled A^2 and B^2.",
+      "source_frame_index": 5,
+      "crop_region_description": "",
+      "search_query": "",
+      "draw_instructions": "",
+      "visual_rationale": "Visualizes the conservation of area by showing that rearranging the same four triangles reveals the A^2 and B^2 areas.",
+      "visual_encodings": [
+        "Top-left empty square = Area A^2 (bounded by magenta)",
+        "Bottom-right empty square = Area B^2 (bounded by green)",
+        "Two rectangles = The four rearranged triangles"
+      ],
+      "text_exclusions": [
+        "The logical deduction that A^2 + B^2 = C^2"
+      ],
+      "forbidden_elements": [
+        "The C^2 label inside this specific frame"
+      ],
+      "max_text_tokens": 5,
+      "image_generation_prompt": "",
+      "image_generation_model": "",
+      "image_generation_size": "1024x1024",
+      "renderer_name": "",
+      "renderer_description": "",
+      "renderer_inputs": [],
+      "renderer_outputs": []
+    },
+    {
+      "name": "final_equation_grounding",
+      "prior_kind": "static",
+      "strategy": "source",
+      "content_description": "The final algebraic equation A^2 + B^2 = C^2 with terms color-coded to match the geometric sides.",
+      "source_frame_index": 7,
+      "crop_region_description": "",
+      "search_query": "",
+      "draw_instructions": "",
+      "visual_rationale": "Provides the final multimodal binding between the spatial areas demonstrated in previous steps and the standard algebraic notation.",
+      "visual_encodings": [
+        "Magenta A^2 = Area of the A-sided square",
+        "Green B^2 = Area of the B-sided square",
+        "Cyan C^2 = Area of the C-sided square"
+      ],
+      "text_exclusions": [
+        "The geometric proof steps"
+      ],
+      "forbidden_elements": [
+        "Triangles",
+        "Bounding boxes"
+      ],
+      "max_text_tokens": 10,
+      "image_generation_prompt": "",
+      "image_generation_model": "",
+      "image_generation_size": "1024x1024",
+      "renderer_name": "",
+      "renderer_description": "",
+      "renderer_inputs": [],
+      "renderer_outputs": []
+    }
+  ],
+  "binding_protocol": {
+    "image_roles": [
+      "base_triangle",
+      "c_squared_area",
+      "rearranged_areas",
+      "equation"
+    ],
+    "coordinate_system": "relative_spatial_arrangement",
+    "text_to_visual_binding": [
+      "The term 'A' in text binds to the magenta line/area in the images.",
+      "The term 'B' in text binds to the green line/area in the images.",
+      "The term 'C' in text binds to the cyan line/area in the images.",
+      "The phrase 'first arrangement' binds to the c_squared_formation image.",
+      "The phrase 'second arrangement' binds to the a_b_squared_formation image."
+    ],
+    "task_binding_rules": [
+      "When analyzing a geometric proof task, map the given shapes to the base_triangle components.",
+      "Track the conservation of area across spatial transformations by comparing the bounding box and the invariant triangle areas."
+    ],
+    "anti_leakage_rules": [
+      "Do not assume the user's task uses the exact same colors; use the colors only to explain the internal logic of this specific proof.",
+      "Focus on the geometric relationships (short leg, long leg, hypotenuse) rather than hardcoded color names when outputting the final reasoning."
+    ]
+  },
+  "runtime_protocol": {
+    "mode": "single_turn",
+    "state_schema": "{stage:string,current_visual_reference:string,evidence:string,conclusion:string}",
+    "update_rule": "Bind each reasoning step to the relevant source frame in order: base triangle definition, C^2 formation, A^2/B^2 formation, and final equation grounding.",
+    "stop_condition": "Stop after the area-conservation argument is grounded in the source frames and the requested geometric conclusion is stated.",
+    "renderer_spec": ""
+  },
+  "usage_constraints": [
+    "The skill assumes the input problem involves Euclidean geometry.",
+    "Do not rely on the specific colors (magenta, green, cyan) being present in the user's target problem; translate the logic to 'short leg', 'long leg', and 'hypotenuse'."
+  ],
+  "assets": [
+    {
+      "filename": "base_triangle_definition.png",
+      "prior_name": "base_triangle_definition",
+      "prior_kind": "static",
+      "strategy": "source",
+      "description": "A right triangle with color-coded sides: A (magenta), B (green), and C (cyan).",
+      "width": 640,
+      "height": 360
+    },
+    {
+      "filename": "c_squared_formation.png",
+      "prior_name": "c_squared_formation",
+      "prior_kind": "static",
+      "strategy": "source",
+      "description": "Four identical right triangles arranged to form an outer square, with their hypotenuses forming an inner tilted square labeled C^2.",
+      "width": 640,
+      "height": 360
+    },
+    {
+      "filename": "a_b_squared_formation.png",
+      "prior_name": "a_b_squared_formation",
+      "prior_kind": "static",
+      "strategy": "source",
+      "description": "The same four right triangles rearranged into two rectangles within an identical outer square, leaving two empty square spaces labeled A^2 and B^2.",
+      "width": 640,
+      "height": 360
+    },
+    {
+      "filename": "final_equation_grounding.png",
+      "prior_name": "final_equation_grounding",
+      "prior_kind": "static",
+      "strategy": "source",
+      "description": "The final algebraic equation A^2 + B^2 = C^2 with terms color-coded to match the geometric sides.",
+      "width": 640,
+      "height": 360
+    }
+  ]
+}
