@@ -1,8 +1,6 @@
 <div align="center">
 
-<img src="docs/assets/autovisualskill-title.gif" width="148" alt="AutoVisualSkill owl mascot logo" />
-
-<h1>AutoVisualSkill</h1>
+<img src="docs/assets/autovisualskill-title.gif" width="600" alt="AutoVisualSkill" />
 
 <p><strong>Empowering multimodal agents with reusable visual and personalized skills.</strong></p>
 
