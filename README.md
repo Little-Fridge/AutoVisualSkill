@@ -1,14 +1,18 @@
 <div align="center">
 
-<img src="docs/assets/autovisualskill-mascot.png" width="148" alt="AutoVisualSkill owl mascot logo" />
+<img src="autovisualskill-title.gif" width="148" alt="AutoVisualSkill owl mascot logo" />
 
-# AutoVisualSkill
+<h1>AutoVisualSkill</h1>
 
-**Empowering multimodal agents with reusable visual and personalized skills.**
+<p><strong>Empowering multimodal agents with reusable visual and personalized skills.</strong></p>
+
+</div>
 
 **AutoVisualSkill** augments multimodal agent skill libraries with reusable **Visual Agent Skill** artifacts. Given text prompts, images, accessible URLs, multimodal chat history, sampled video frames, and user interaction traces, it analyzes the task context, identifies visual and personalization bottlenecks, and authors structured skills that downstream agents can load, inspect, version, and reuse. Each generated skill packages task logic, visual priors, multimodal binding protocols, runtime constraints, provenance, and a machine-readable manifest.
 
 Beyond task-level skillization, AutoVisualSkill can capture user-specific work habits, preferred procedures, decision patterns, visual judgment patterns, and interaction styles, enabling multimodal agents to act with stronger visual grounding, better workflow continuity, and more personalized task execution.
+
+<div align="center">
 
 [![Python](https://img.shields.io/badge/Python-3.10%2B-2563eb)](#installation)
 [![License](https://img.shields.io/badge/License-MIT-087f5b)](LICENSE)
@@ -21,7 +25,6 @@ Beyond task-level skillization, AutoVisualSkill can capture user-specific work h
 [Curated Examples](#curated-examples)
 
 </div>
-
 ---
 
 ## Why Visual Skills?
