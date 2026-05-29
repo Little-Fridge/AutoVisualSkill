@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="autovisualskill-title.gif" width="148" alt="AutoVisualSkill owl mascot logo" />
+<img src="docs/assets/autovisualskill-title.gif" width="148" alt="AutoVisualSkill owl mascot logo" />
 
 <h1>AutoVisualSkill</h1>
 
