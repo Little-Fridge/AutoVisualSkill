@@ -10,9 +10,9 @@
 chat history, sampled video frames, and user interaction traces into reusable
 **Visual Agent Skill** artifacts. Each skill combines task logic, visual priors,
 multimodal binding protocols, runtime constraints, and a machine-readable
-manifest. Beyond task skillization, AutoVisualSkill can capture user-specific
+manifest. **Beyond task skillization, AutoVisualSkill can capture user-specific
 work habits, preferred procedures, decision patterns, and interaction styles so
-multimodal agents can act more personally, efficiently, and reliably.
+multimodal agents can act more personally, efficiently, and reliably**.
 
 [![Python](https://img.shields.io/badge/Python-3.10%2B-2563eb)](#installation)
 [![License](https://img.shields.io/badge/License-MIT-087f5b)](LICENSE)
@@ -568,7 +568,7 @@ This repository is a research prototype.
   `exec()`. Treat this as unsafe for untrusted models or production use. A
   production version should replace this with a constrained drawing DSL or a
   sandboxed subprocess. The `overlay` strategy is safer: the model returns a
-  structured mark plan and AutoVisualSkill renders it with a fixed local
+  structured mark plan, and AutoVisualSkill renders it with a fixed local
   renderer.
 - Generated artifacts can include model outputs and source metadata. Do not
   publish `skill_output/` from private runs unless you have reviewed it.
@@ -581,7 +581,7 @@ If AutoVisualSkill is useful for your work, please cite our paper once available
 ```bibtex
 @misc{autovisualskill2026,
   title        = {Reusable Agent Skills Should Go Beyond Text: The Case for Visual Skills},
-  author       = {Anonymous},
+  author       = {Binxiao Xu, Ruichuan An, Bocheng Zou, Hang Hua},
   year         = {2026},
   eprint       = {XXXX.XXXXX},
   archivePrefix= {arXiv},
