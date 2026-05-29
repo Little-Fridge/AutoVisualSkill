@@ -6,7 +6,7 @@
 
 **An agentic system for converting multimodal context and user interaction traces into reusable visual and personalized skills.**
 
-**AutoVisualSkill** is an agentic skill-authoring system, not a static skill library. Given multimodal materials such as text prompts, images, accessible URLs, multimodal chat history, sampled video frames, and user interaction traces, it actively analyzes the task context, identifies visual or personalization bottlenecks, and produces structured **Visual Agent Skill** artifacts that downstream agents can load and reuse. Each generated skill packages task logic, visual priors, multimodal binding protocols, runtime constraints, provenance, and a machine-readable manifest.
+**AutoVisualSkill** is an agentic system for authoring reusable visual and personalized skills that augment multimodal agent skill libraries. Given multimodal materials such as text prompts, images, accessible URLs, multimodal chat history, sampled video frames, and user interaction traces, it actively analyzes the task context, identifies visual or personalization bottlenecks, and produces structured **Visual Agent Skill** artifacts that downstream agents can load and reuse. Each generated skill package task logic, visual priors, multimodal binding protocols, runtime constraints, provenance, and a machine-readable manifest.
 
 AutoVisualSkill goes beyond task-level skillization. It can also capture user-specific work habits, preferred procedures, decision patterns, visual judgment patterns, and interaction styles, enabling multimodal agents to act with stronger visual grounding, better workflow continuity, and more personalized task execution.
 
