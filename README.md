@@ -1,8 +1,6 @@
 <div align="center">
 
-<img src="docs/assets/autovisualskill-banner.png" width="600" alt="AutoVisualSkill" />
-
-<p><strong>Empowering multimodal agents with reusable visual and personalized skills.</strong></p>
+<img src="docs/assets/autovisualskill-banner.png" width="700" alt="AutoVisualSkill" />
 
 </div>
 
@@ -23,6 +21,7 @@ Beyond task-level skillization, AutoVisualSkill can capture user-specific work h
 [Curated Examples](#curated-examples)
 
 </div>
+
 ---
 
 ## Why Visual Skills?
