@@ -6,7 +6,7 @@
 
 **An agentic system for converting multimodal context and user interaction traces into reusable visual and personalized skills.**
 
-**AutoVisualSkill** is an agent system that authors reusable skills for multimodal agents. It reads text prompts, images, accessible URLs, multimodal chat history, sampled video frames, and user interaction traces, then converts them into structured **Visual Agent Skill** artifacts. Each generated skill packages task logic, visual priors, multimodal binding protocols, runtime constraints, provenance, and a machine-readable manifest that downstream agents can load and reuse.
+**AutoVisualSkill** is an agentic skill-authoring system, not a static skill library. Given multimodal materials such as text prompts, images, accessible URLs, multimodal chat history, sampled video frames, and user interaction traces, it actively analyzes the task context, identifies visual or personalization bottlenecks, and produces structured **Visual Agent Skill** artifacts that downstream agents can load and reuse. Each generated skill packages task logic, visual priors, multimodal binding protocols, runtime constraints, provenance, and a machine-readable manifest.
 
 AutoVisualSkill goes beyond task-level skillization. It can also capture user-specific work habits, preferred procedures, decision patterns, visual judgment patterns, and interaction styles, enabling multimodal agents to act with stronger visual grounding, better workflow continuity, and more personalized task execution.
 
@@ -28,7 +28,7 @@ AutoVisualSkill goes beyond task-level skillization. It can also capture user-sp
 
 Agent skills are usually represented as text: rules, tool descriptions, checklists, prompt templates, demonstrations, and executable snippets. Text is effective for describing high-level logic, but many multimodal tasks depend on information that is spatial, perceptual, stylistic, or stateful. Examples include GUI hitboxes, chart readout directions, table-cell intersections, visual scan progress, route state, slide layout, color usage, typography, and region-level design intent.
 
-AutoVisualSkill addresses this limitation by treating these visual conventions as first-class skill components. Instead of compressing every reusable behavior into text, it builds skills that combine textual logic with visual priors, runtime visual state, and explicit bindings between instructions and the evidence they rely on.
+AutoVisualSkill addresses this limitation by treating these visual conventions as first-class skill components. In text-only skills, these conventions are often omitted, described vaguely, or repeatedly re-inferred at runtime. AutoVisualSkill instead makes them persistent, inspectable, and transferable by combining textual logic with visual priors, runtime visual state, and explicit bindings between instructions and the evidence they rely on.
 
 <p align="center">
   <a href="docs/assets/paper_teaser.pdf">
@@ -59,6 +59,16 @@ AutoVisualSkill addresses this limitation by treating these visual conventions a
     <td>A step-wise skill that aligns text instructions, reasoning steps, style rules, or user preferences with the visual evidence that grounds them, such as screenshots, diagrams, chat attachments, generated panels, design examples, or sampled video frames.</td>
   </tr>
 </table>
+
+## What Makes It Useful?
+
+AutoVisualSkill is designed for agent developers who need reusable multimodal behavior rather than one-off prompting. A generated skill can help a downstream agent:
+
+- apply a visual convention consistently across similar tasks;
+- preserve intermediate visual state across long-horizon execution;
+- reuse layout, style, and region-level design feedback;
+- transfer a person's workflow habits or visual judgment patterns into future tasks;
+- keep provenance, assets, runtime constraints, and integration metadata together with the instruction file.
 
 ## Demo Gallery
 
@@ -123,7 +133,7 @@ Static visual skills make implicit visual conventions explicit. These examples u
   </tr>
 </table>
 
-### Externalize Runtime State and Visual Style
+### Externalize Runtime State, Layout, and Visual Style
 
 Dynamic visual skills write intermediate state back onto the task image, allowing the next reasoning step to inspect visible progress instead of relying only on hidden context. This is useful for visual search, counting, route planning, geometry, and artifact editing.
 
@@ -211,7 +221,7 @@ A visual skill makes these design decisions inspectable by marking the artifact 
 
 ### Bind Steps to Visual Evidence and Personal Examples
 
-Interleaved visual skills keep reasoning steps close to the visual evidence or visual references they depend on. The source may be sampled video frames, documentation screenshots, generated design panels, or multimodal chat evidence from a visual collaborator.
+Interleaved visual skills keep reasoning steps close to the visual evidence or visual references they depend on. They are useful when a skill is best represented as an ordered sequence of text steps paired with the visual evidence each step uses. The source may be sampled video frames, documentation screenshots, generated design panels, or multimodal chat evidence from a visual collaborator.
 
 This skill type is especially useful when the reusable knowledge is not just a task procedure, but a grounded style, preference, or work habit. Instead of summarizing a user's behavior as vague text, AutoVisualSkill can preserve the examples, regions, before/after edits, and visual evidence that make the behavior reusable.
 
@@ -438,7 +448,7 @@ python -m autovisualskill.main \
 python demo_gradio.py
 ```
 
-Then open the local URL printed by Gradio. The demo can display curated generated artifacts without an API key. Provide an API key only when you want to run live generation.
+Then open the local URL printed by Gradio. The demo can display curated generated artifacts without an API key. Paste an API key into the password field only when you want to run live generation.
 
 ## Static, Dynamic, and Interleaved Skills
 
