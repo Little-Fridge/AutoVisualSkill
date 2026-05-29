@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="docs/assets/autovisualskill-title.gif" width="600" alt="AutoVisualSkill" />
+<img src="docs/assets/autovisualskill-banner.png" width="600" alt="AutoVisualSkill" />
 
 <p><strong>Empowering multimodal agents with reusable visual and personalized skills.</strong></p>
 
