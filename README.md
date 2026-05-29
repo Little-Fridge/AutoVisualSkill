@@ -140,7 +140,21 @@ Dynamic visual skills write intermediate state back onto the task image, allowin
 For slide and document editing, dynamic visual skills go beyond content-level feedback. They can expose layout structure, reading order, typography, color usage, spacing, alignment, emphasis, and style consistency as visible design state. A text-only critique may say “make the slide cleaner” or “improve the hierarchy,” but it cannot precisely show which region is visually overloaded, which alignment is broken, which color relationship should be preserved, or how the redesigned layout should inherit the original intent.
 
 A visual skill makes these design decisions inspectable by marking the artifact directly and binding each visual region to a concrete edit.
-
+<table>
+  <tr>
+    <td width="50%" align="center">
+      <img src="docs/assets/demo_arc_agi_route_comparison.png" width="100%" alt="ARC-AGI-3 without and with route-state dynamic visual overlay comparison" />
+    </td>
+    <td width="50%" valign="middle">
+      <b>ARC-AGI route-state planning</b><br />
+      <sub><b>Input:</b> a real ARC-AGI-3 <code>ls20</code> game frame rendered with the official toolkit.</sub><br />
+      <sub><b>Visual skill:</b> keep the current object, visited route, next waypoint, and local plan visible on the returned frame.</sub><br />
+      <sub><b>Comparison:</b> after a shared prefix, direct Gemini chooses <code>ACTION2</code> / down and goes off-route; with the route-state overlay, it chooses <code>ACTION1</code> / up and continues along the official route.</sub><br />
+      <sub><b>Why it matters:</b> interactive visual agents need persistent state across actions. A text summary can describe the route, but a visual overlay preserves the spatial relation among the current position, visited path, obstacle structure, and next waypoint.</sub><br />
+      <sub><a href="examples/curated_skills/open_source_homepage_regenerated/12_arc_agi_route_planning/skill.md">skill.md</a> · <a href="examples/curated_skills/open_source_homepage_regenerated/12_arc_agi_route_planning/SOURCE.md">source</a></sub>
+    </td>
+  </tr>
+</table>
 <table>
   <tr>
     <td align="center">
@@ -203,21 +217,7 @@ A visual skill makes these design decisions inspectable by marking the artifact 
   </tr>
 </table>
 
-<table>
-  <tr>
-    <td width="50%" align="center">
-      <img src="docs/assets/demo_arc_agi_route_comparison.png" width="100%" alt="ARC-AGI-3 without and with route-state dynamic visual overlay comparison" />
-    </td>
-    <td width="50%" valign="middle">
-      <b>ARC-AGI route-state planning</b><br />
-      <sub><b>Input:</b> a real ARC-AGI-3 <code>ls20</code> game frame rendered with the official toolkit.</sub><br />
-      <sub><b>Visual skill:</b> keep the current object, visited route, next waypoint, and local plan visible on the returned frame.</sub><br />
-      <sub><b>Comparison:</b> after a shared prefix, direct Gemini chooses <code>ACTION2</code> / down and goes off-route; with the route-state overlay, it chooses <code>ACTION1</code> / up and continues along the official route.</sub><br />
-      <sub><b>Why it matters:</b> interactive visual agents need persistent state across actions. A text summary can describe the route, but a visual overlay preserves the spatial relation among the current position, visited path, obstacle structure, and next waypoint.</sub><br />
-      <sub><a href="examples/curated_skills/open_source_homepage_regenerated/12_arc_agi_route_planning/skill.md">skill.md</a> · <a href="examples/curated_skills/open_source_homepage_regenerated/12_arc_agi_route_planning/SOURCE.md">source</a></sub>
-    </td>
-  </tr>
-</table>
+
 
 ### Bind Steps to Visual Evidence and Personal Examples
 
