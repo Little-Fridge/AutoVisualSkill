@@ -84,6 +84,10 @@ The following clips compare the same held-out task with and without the generate
 
 <img src="docs/assets/videos/demo_counting_visual_skill.gif" width="100%" alt="Dense counting comparison with direct answer on the left and visible visual-skill anchors on the right" />
 
+**ARC-AGI route-state planning: both branches start from the same official `ls20` episode. The direct branch loses route state at the split, while the visual-skill branch keeps the visited path, waypoint, and next action visible.**
+
+<img src="docs/assets/videos/demo_arc_agi_route_visual_skill.gif" width="100%" alt="ARC-AGI-3 route-state comparison showing raw frames without skill and route-state overlay with visual skill" />
+
 **Slide layout and style refinement: text-only feedback remains broad, while the visual skill marks layout, hierarchy, color, spacing, and region-level redesign intent directly on the slide.**
 
 <img src="docs/assets/videos/demo_ppt_visual_skill.gif" width="100%" alt="Slide layout and style refinement comparison with text-only repair on the left and region-grounded visual-skill repair on the right" />
@@ -92,9 +96,7 @@ The following clips compare the same held-out task with and without the generate
 
 <img src="docs/assets/videos/demo_odd_one_out_visual_skill.gif" width="100%" alt="Odd-one-out comparison with one-shot direct answer on the left and checked candidate state on the right" />
 
-**ARC-AGI route-state planning: both branches start from the same official `ls20` episode. The direct branch loses route state at the split, while the visual-skill branch keeps the visited path, waypoint, and next action visible.**
 
-<img src="docs/assets/videos/demo_arc_agi_route_visual_skill.gif" width="100%" alt="ARC-AGI-3 route-state comparison showing raw frames without skill and route-state overlay with visual skill" />
 
 ### Clarify Spatial and Perceptual Conventions
 
