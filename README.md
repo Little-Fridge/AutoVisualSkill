@@ -2,32 +2,22 @@
 
 <img src="docs/assets/autovisualskill-mascot.png" width="148" alt="AutoVisualSkill owl mascot logo" />
 
-<p align="center">
-
-  <img src="docs/assets/autovisualskill-title.gif" width="720" alt="AutoVisualSkill" />
-
-</p>
+# AutoVisualSkill
 
 **Empowering multimodal agents with reusable visual and personalized skills.**
 
-**AutoVisualSkill** augments multimodal agent skill libraries with reusable **Visual Agent Skill** artifacts. Given text prompts, images, accessible URLs, multimodal chat history, sampled video frames, and user interaction traces, it analyzes the task context, identifies visual and personalization bottlenecks, and authors structured skills that downstream agents can load, inspect, version, and reuse. Each generated skill packages task logic, visual priors, multimodal binding protocols, runtime constraints, provenance, and a machine-readable manifest.
+**AutoVisualSkill** is an agentic system for authoring reusable visual and personalized skills that augment multimodal agent skill libraries. Given multimodal materials such as text prompts, images, accessible URLs, multimodal chat history, sampled video frames, and user interaction traces, it actively analyzes the task context, identifies visual or personalization bottlenecks, and produces structured **Visual Agent Skill** artifacts that downstream agents can load and reuse. Each generated skill package task logic, visual priors, multimodal binding protocols, runtime constraints, provenance, and a machine-readable manifest.
 
-Beyond task-level skillization, AutoVisualSkill can capture user-specific work habits, preferred procedures, decision patterns, visual judgment patterns, and interaction styles, enabling multimodal agents to act with stronger visual grounding, better workflow continuity, and more personalized task execution.
+AutoVisualSkill goes beyond task-level skillization. It can also capture user-specific work habits, preferred procedures, decision patterns, visual judgment patterns, and interaction styles, enabling multimodal agents to act with stronger visual grounding, better workflow continuity, and more personalized task execution.
 
 [![Python](https://img.shields.io/badge/Python-3.10%2B-2563eb)](#installation)
-
 [![License](https://img.shields.io/badge/License-MIT-087f5b)](LICENSE)
-
 [![Paper](https://img.shields.io/badge/arXiv-coming_soon-b7791f)](https://arxiv.org/abs/XXXX.XXXXX)
-
 [![Status](https://img.shields.io/badge/status-research_prototype-7c3aed)](#safety-and-prototype-notes)
 
 [Paper](https://arxiv.org/abs/XXXX.XXXXX) ·
-
 [Quick Start](#quick-start) ·
-
 [Demo](#launch-the-gradio-demo) ·
-
 [Curated Examples](#curated-examples)
 
 </div>
