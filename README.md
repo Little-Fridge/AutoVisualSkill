@@ -12,10 +12,10 @@ Beyond task-level skillization, AutoVisualSkill can capture user-specific work h
 
 [![Python](https://img.shields.io/badge/Python-3.10%2B-2563eb)](#installation)
 [![License](https://img.shields.io/badge/License-MIT-087f5b)](LICENSE)
-[![Paper](https://img.shields.io/badge/arXiv-coming_soon-b7791f)](https://arxiv.org/abs/XXXX.XXXXX)
+[![Paper](https://img.shields.io/badge/arXiv-2606.01414-b7791f)](https://arxiv.org/abs/2606.01414)
 [![Status](https://img.shields.io/badge/status-research_prototype-7c3aed)](#safety-and-prototype-notes)
 
-[Paper](https://arxiv.org/abs/XXXX.XXXXX) ·
+[Paper](https://arxiv.org/abs/2606.01414) ·
 [Quick Start](#quick-start) ·
 [Demo](#launch-the-gradio-demo) ·
 [Curated Examples](#curated-examples)
@@ -540,14 +540,14 @@ This repository is a research prototype.
 
 ## Citation
 
-If AutoVisualSkill is useful for your work, please cite our paper once available:
+If AutoVisualSkill is useful for your work, please cite our paper:
 
 ```bibtex
 @misc{autovisualskill2026,
   title        = {Reusable Agent Skills Should Go Beyond Text: The Case for Visual Skills},
   author       = {Binxiao Xu, Ruichuan An, Bocheng Zou, Hang Hua},
   year         = {2026},
-  eprint       = {XXXX.XXXXX},
+  eprint       = {2606.01414},
   archivePrefix= {arXiv},
   primaryClass = {cs.AI}
 }
